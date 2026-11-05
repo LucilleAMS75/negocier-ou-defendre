@@ -6,3 +6,5 @@ Activité interactive (CCI) en une seule page HTML, sans dépendance externe.
 - `assets/` : polices, illustrations, curseurs, son
 
 Publication : GitHub Pages, branche `main`, dossier racine.
+
+ 
