@@ -44,7 +44,7 @@ p{margin:0}
 .tools{flex:none}
 @media (min-width:721px){.topbar{flex-wrap:nowrap}}
 .brand img{height:46px;width:auto;display:block}
-.crumb{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.crumb b{color:var(--navy);font-weight:700}.crumb span{color:var(--muted)}
+.crumb{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.crumb b{color:var(--navy);font-weight:700}
 .tools{display:flex;align-items:center;gap:2px}
 .tool{display:flex;align-items:center;gap:8px;min-height:44px;border:0;background:none;font:inherit;font-weight:600;color:var(--muted);padding:6px 12px;border-radius:10px}
 .tool:hover{color:var(--navy);background:#f6f3ef}
@@ -542,7 +542,10 @@ body.is-home{background:#fdf8f2}
 .home-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px;margin:0;padding:0;list-style:none}
 .home-card{display:flex;flex-direction:column;align-items:center;gap:18px;padding:22px 22px 26px;border-radius:26px;background:#fdf9f4;box-shadow:0 14px 40px rgb(16 20 72 / 9%);transition:transform .2s ease,box-shadow .2s ease}
 .home-card:hover{transform:translateY(-4px);box-shadow:0 18px 46px rgb(16 20 72 / 13%)}
-.home-card img{display:block;width:100%;max-width:400px;height:auto;aspect-ratio:405/275;object-fit:contain}
+.home-card img{display:block;width:100%;max-width:400px;height:275px;object-fit:contain}
+.home-card img.home-picto{height:275px;width:100%;max-width:400px;aspect-ratio:auto;object-fit:contain;transform:scale(1.45);transform-origin:center 55%}
+.home-card{overflow:hidden}
+.home-card .home-btn{position:relative;z-index:1}
 .home-btn{min-height:62px;width:min(320px,100%);border-radius:999px;font-size:1.45rem;font-weight:700;justify-content:center;gap:40px;transition:transform .15s ease,filter .15s ease}
 .home-btn:hover{transform:scale(1.05)}
 .home-btn:active{transform:scale(.95)}
@@ -578,7 +581,7 @@ body.is-home{background:#fdf8f2}
 <header class="topbar">
   <div class="brand">
     <img src="assets/logo/logo-cci-bleu.png" alt="Chambre de commerce et d'industrie">
-    <p class="crumb"><b>Négocier ou défendre</b> <span id="crumb-step">· 1.1 Les mots du cours</span></p>
+    <p class="crumb"><b>Négocier ou défendre</b></p>
   </div>
   <div class="tools">
     <button type="button" class="tool" id="tour-btn" aria-haspopup="dialog" title="Visite guidée">
@@ -623,7 +626,7 @@ body.is-home{background:#fdf8f2}
       <button type="button" class="btn primary home-btn" id="go-ex1" aria-label="Exercice 1 : les mots du cours">Exercice 1 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
     </li>
     <li class="home-card">
-      <img src="assets/accueil/illu-exercice-2.png" alt="" width="370" height="250">
+      <img src="assets/accueil/picto-exercice-2.webp" alt="" width="639" height="639" class="home-picto">
       <button type="button" class="btn primary home-btn" id="go-ex2" aria-label="Exercice 2 : sept situations, quatre catégories">Exercice 2 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
     </li>
   </ul>
@@ -1457,12 +1460,12 @@ function markNav2(){
 
 /* ===== Navigation entre les quatre vues ===== */
 const VIEWS={
-  accueil:{h:"h-home",nav:null,crumb:"· Accueil",title:"Accueil"},
-  exercice:{h:"h-ex",nav:"nav-ex",crumb:"· 1.1 Les mots du cours",title:"1.1 Les mots du cours"},
-  corrige:{h:"h-co",nav:"nav-co",crumb:"· Corrigé 1.1 Les mots du cours",title:"Corrigé 1.1"},
-  exercice2:{h:"h-ex2",nav:"nav-ex2",crumb:"· 1.2 Sept situations, quatre catégories",title:"1.2 Sept situations, quatre catégories"},
-  corrige2:{h:"h-co2",nav:"nav-co2",crumb:"· Corrigé 1.2 Sept situations, quatre catégories",title:"Corrigé 1.2"},
-  retenir:{h:"h-ret",nav:"nav-ret",crumb:"· À retenir",title:"À retenir"}
+  accueil:{h:"h-home",nav:null,title:"Accueil"},
+  exercice:{h:"h-ex",nav:"nav-ex",title:"1.1 Les mots du cours"},
+  corrige:{h:"h-co",nav:"nav-co",title:"Corrigé 1.1"},
+  exercice2:{h:"h-ex2",nav:"nav-ex2",title:"1.2 Sept situations, quatre catégories"},
+  corrige2:{h:"h-co2",nav:"nav-co2",title:"Corrigé 1.2"},
+  retenir:{h:"h-ret",nav:"nav-ret",title:"À retenir"}
 };
 let curView="exercice";
 function show(view,noFocus){
@@ -1475,7 +1478,6 @@ function show(view,noFocus){
   });
   document.body.classList.toggle("is-home",view==="accueil");
   const home=$("home");if(view==="accueil")home.setAttribute("aria-current","page");else home.removeAttribute("aria-current");
-  $("crumb-step").textContent=VIEWS[view].crumb;
   document.title="Négocier ou défendre · "+VIEWS[view].title;
   if(view==="exercice")update();
   if(view==="exercice2")render2();
