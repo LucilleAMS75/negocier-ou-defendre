@@ -1,0 +1,1654 @@
+﻿<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Négocier ou défendre · 1.1 Les mots du cours</title>
+<style>
+/* Charte « Panneau de gauche » (L'Atelier Vente), menu et jauge en violet #810464.
+   Accessibilité : contrastes AA vérifiés, focus visible, reflow à 320 px, pas d'information portée par la couleur seule. */
+@font-face{font-family:"Fira Sans";src:url("assets/polices/fira-sans-400.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Fira Sans";src:url("assets/polices/fira-sans-400i.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Fira Sans";src:url("assets/polices/fira-sans-600.woff2") format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Fira Sans";src:url("assets/polices/fira-sans-700.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Fira Sans";src:url("assets/polices/fira-sans-800.woff2") format("woff2");font-weight:800;font-display:swap}
+
+:root{
+  --navy:#101448; --accent:#810464; --coral:#f96e4a; --blue:#3a3ff5;
+  --violet:#810464; --violet-soft:#f6e9f2; --violet-line:#d9aecb;
+  --text:#19264f; --muted:#4f5f80; --line:#d7dbe6; --paper:#fbf2e9; --card:#fff;
+  --ok:#17703f; --ok-bg:#e6f5ec; --ko:#a8361f; --ko-bg:#fdece7;
+  --cursor-arrow:url("assets/curseurs/curseur-fleche.svg") 1 1, auto;
+  --cursor-hand:url("assets/curseurs/curseur-main.svg") 9 1, pointer;
+  --menu-rail:68px; --menu-panel:min(360px, calc(100vw - 68px - 24px));
+}
+*{box-sizing:border-box}
+html{cursor:var(--cursor-arrow)}
+body{margin:0;font-family:"Fira Sans","Segoe UI",Arial,sans-serif;color:var(--text);background:var(--paper);line-height:1.55;font-size:1rem;padding-left:var(--menu-rail)}
+a[href],button,summary{cursor:var(--cursor-hand)}
+button[aria-disabled="true"],a[aria-disabled="true"]{cursor:var(--cursor-arrow)}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid var(--navy);outline-offset:3px}
+h1,h2,h3{color:var(--navy);line-height:1.15;letter-spacing:-.02em;margin:0}
+p{margin:0}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* Lien d'évitement */
+.skip{position:absolute;left:calc(var(--menu-rail) + 12px);top:-60px;z-index:100;background:var(--navy);color:#fff;font-weight:700;padding:10px 16px;border-radius:10px;text-decoration:none}
+.skip:focus{top:10px;outline:3px solid var(--coral);outline-offset:2px}
+
+/* En-tête */
+.topbar{position:relative;z-index:5;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;padding:10px 28px;background:#fff;box-shadow:0 1px 0 rgb(16 20 72 / 8%);font-size:1.15rem}
+.brand{display:flex;align-items:center;gap:28px;min-width:0;flex:1 1 auto}
+.brand img{flex:none}
+.tools{flex:none}
+@media (min-width:721px){.topbar{flex-wrap:nowrap}}
+.brand img{height:46px;width:auto;display:block}
+.crumb{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.crumb b{color:var(--navy);font-weight:700}.crumb span{color:var(--muted)}
+.tools{display:flex;align-items:center;gap:2px}
+.tool{display:flex;align-items:center;gap:8px;min-height:44px;border:0;background:none;font:inherit;font-weight:600;color:var(--muted);padding:6px 12px;border-radius:10px}
+.tool:hover{color:var(--navy);background:#f6f3ef}
+.tool[aria-pressed="true"]{color:var(--violet)}
+.tool[aria-pressed="true"]:hover{background:var(--violet-soft)}
+.zoom-group{display:flex;align-items:center;gap:4px;padding:0 8px;color:var(--muted);font-weight:600}
+.zoom-name{display:flex;align-items:center;gap:6px;margin-right:4px}
+.zoom-btn{display:grid;place-items:center;width:34px;height:34px;border:1.5px solid var(--violet-line);border-radius:50%;background:#fff;color:var(--violet);transition:transform .15s ease,background .15s ease}
+.zoom-btn::after{content:"";position:absolute;inset:-5px}
+.zoom-btn{position:relative}
+.zoom-btn:hover{background:var(--violet-soft);transform:scale(1.1)}
+.zoom-btn:active{transform:scale(.9)}
+.zoom-btn[aria-disabled="true"]{opacity:.4;cursor:var(--cursor-arrow);transform:none;background:#fff}
+.zoom-val{font-variant-numeric:tabular-nums;font-size:.85em;font-weight:700;color:var(--violet);background:var(--violet-soft);border-radius:999px;padding:1px 8px;min-width:4.2em;text-align:center}
+/* Zoom du contenu (le bandeau et le menu restent à taille fixe) */
+#contenu,.trap-dialog{zoom:var(--zoom,1)}
+
+/* Décors aquarelle (images issues de la maquette, fondues dans le papier) */
+.decor{position:fixed;z-index:0;pointer-events:none;user-select:none}
+.decor.tl{position:absolute;top:66px;left:var(--menu-rail);width:170px;-webkit-mask-image:linear-gradient(to right,#000 70%,transparent),linear-gradient(to bottom,#000 70%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,#000 70%,transparent),linear-gradient(to bottom,#000 70%,transparent);mask-composite:intersect}
+.decor.bl{bottom:0;left:var(--menu-rail);width:205px;-webkit-mask-image:linear-gradient(to right,#000 75%,transparent),linear-gradient(to bottom,transparent,#000 25%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,#000 75%,transparent),linear-gradient(to bottom,transparent,#000 25%);mask-composite:intersect}
+.decor.br{bottom:0;right:0;width:222px;-webkit-mask-image:linear-gradient(to left,#000 75%,transparent),linear-gradient(to bottom,transparent,#000 25%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to left,#000 75%,transparent),linear-gradient(to bottom,transparent,#000 25%);mask-composite:intersect}
+#contenu{position:relative;z-index:1}
+
+/* Page */
+.wrap{max-width:1210px;margin:0 auto;padding:30px 24px 64px;display:flex;flex-direction:column;gap:28px}
+.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;align-items:center;padding-left:36px}
+#corrige>div:first-child{padding-left:36px}
+.hero-txt{display:flex;flex-direction:column;gap:16px;min-width:0}
+.hero-img{margin:0 -70px 0 0;-webkit-mask-image:radial-gradient(ellipse 60% 60% at 50% 50%,#000 72%,transparent 100%);mask-image:radial-gradient(ellipse 60% 60% at 50% 50%,#000 72%,transparent 100%)}
+.hero-img img{display:block;width:100%;height:auto}
+.eyebrow{text-transform:uppercase;letter-spacing:.1em;font-size:.95rem;font-weight:700;color:var(--violet)}
+h1{font-size:clamp(2rem,4.6vw,3.3rem);font-weight:800;margin-top:2px;letter-spacing:-.025em}
+h1::after{content:"";display:block;width:62px;height:4px;border-radius:4px;background:var(--violet);margin-top:16px}
+h1:focus{outline:none}
+h1:focus-visible{outline:none}
+.lead{font-size:1.15rem;max-width:62ch}
+.lead b{color:var(--navy)}
+.meta{display:flex;flex-wrap:wrap;gap:12px;margin:0;padding:0;list-style:none}
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:.92rem;font-weight:600;color:var(--navy);background:#fff;border:1px solid var(--violet-line);border-radius:999px;padding:6px 16px 6px 10px}
+.tag svg{flex:none;color:var(--violet)}
+.context{color:var(--text);max-width:75ch;font-size:.98rem}
+.context b{color:var(--navy)}
+
+.card{background:var(--card);border-radius:24px;padding:24px 30px 30px;box-shadow:0 10px 40px rgb(16 20 72 / 8%);display:flex;flex-direction:column;gap:20px;min-width:0}
+.bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.count{color:var(--navy);font-weight:700;font-size:1.3rem;font-variant-numeric:tabular-nums}
+.actions{display:flex;flex-wrap:wrap;gap:16px}
+.btn{font:inherit;font-weight:600;font-size:1.05rem;min-height:46px;padding:10px 22px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--navy);display:inline-flex;align-items:center;justify-content:center;gap:10px}
+.btn:hover{border-color:var(--violet);color:var(--violet)}
+.btn.primary{background:var(--violet);border-color:var(--violet);color:#fff;box-shadow:0 6px 16px rgb(129 4 100 / 25%)}
+.btn.primary:hover{color:#fff;filter:brightness(1.12)}
+.btn.primary[aria-disabled="true"]{background:#e6dbe3;border-color:#e6dbe3;color:#5a3a52;box-shadow:none;filter:none}
+
+.kbd-help{font-size:.95rem;line-height:2;color:var(--text);background:#f8f0f5;border-radius:10px;padding:8px 16px}
+.kbd-help svg{color:var(--violet);margin-right:12px;vertical-align:middle}
+.kbd-help b{color:var(--violet);font-weight:700;margin-right:4px}
+kbd{display:inline-grid;place-items:center;min-width:26px;height:26px;font-family:inherit;font-weight:700;font-size:.88em;color:var(--violet);background:#fff;border:1.5px solid var(--violet-line);border-radius:7px;padding:0 6px}
+
+/* Plateau d'association */
+.board{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,9fr);gap:26px}
+.col{display:flex;flex-direction:column;gap:10px;min-width:0}
+.col h2{font-size:.95rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--navy);margin:4px 0 2px}
+.list{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
+.item{display:flex;align-items:center;gap:16px;width:100%;min-height:56px;padding:8px 14px 8px 12px;text-align:left;font:inherit;line-height:1.35;color:var(--navy);background:#fff;border:2px solid var(--line);border-radius:10px;transition:border-color .15s,background .15s,transform .15s,box-shadow .15s}
+.item:hover{border-color:var(--violet-line);box-shadow:0 4px 14px rgb(129 4 100 / 8%)}
+.item.term{font-weight:700;font-size:1.12rem}
+.item .key{flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:8px;background:var(--violet-soft);font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums}
+.item .txt{flex:1;min-width:0;overflow-wrap:anywhere}
+.item .txt small{display:block;font-weight:400;color:var(--muted);font-size:.85rem}
+.slot{flex:none;min-width:34px;height:34px;padding:0 6px;border-radius:999px;display:grid;place-items:center;border:2px dashed #b9bfcc;font-size:.9rem;font-weight:800;color:transparent;transition:background .15s,border-color .15s}
+.item[aria-pressed="true"]{border-color:var(--violet);border-style:double;border-width:4px;padding:6px 12px 6px 10px;background:var(--violet-soft);transform:translateX(4px)}
+.item.def[aria-pressed="true"]{transform:translateX(-4px)}
+.item[aria-pressed="true"] .key{background:#fff}
+.item[aria-pressed="true"] .slot{border-color:var(--violet);color:var(--violet)}
+.item.paired{border-color:var(--violet-line);background:#fdf8fb}
+.item.paired .slot{border:2px solid var(--violet);background:var(--violet);color:#fff}
+
+/* Tableau réponse */
+.card-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:12px 20px;margin-top:4px}
+.card-foot .hint{margin-right:auto}
+.hint{color:var(--muted);font-size:.95rem}
+
+/* Corrigé */
+.score{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}
+.score-num{font-size:2.6rem;font-weight:800;color:var(--navy);line-height:1;font-variant-numeric:tabular-nums}
+.score-num span{font-size:1.2rem;color:var(--muted);font-weight:700}
+.answers{margin:0;padding:0;list-style:none;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.arow{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,3fr) 8.5rem 6rem;gap:8px 16px;align-items:start;padding:12px 14px;border-bottom:1px solid var(--line)}
+.arow:last-child{border-bottom:0}
+.arow.head{background:#f3f5fb;color:var(--navy);font-weight:700;font-size:.92rem}
+.arow.focus{background:var(--violet-soft)}
+.arow .t{font-weight:700;color:var(--navy);overflow-wrap:anywhere}
+.arow .t small{display:block;font-weight:400;color:var(--muted)}
+.arow .r{display:flex;gap:8px;align-items:flex-start;min-width:0}
+.arow .lbl{display:none;font-size:.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.letter{flex:none;display:inline-grid;place-items:center;min-width:26px;height:26px;border-radius:999px;font-weight:800;font-size:.85rem}
+.letter.good{background:var(--navy);color:#fff}
+.mine{display:flex;align-items:center;gap:8px}
+.mine.ok .letter{background:var(--ok-bg);color:var(--ok);border:2px solid var(--ok)}
+.mine.ko .letter{background:var(--ko-bg);color:var(--ko);border:2px solid var(--ko)}
+.verdict{font-weight:700;display:flex;align-items:center;gap:6px}
+.verdict.ok{color:var(--ok)}.verdict.ko{color:var(--ko)}
+
+/* Mise en valeur : limite / BATNA */
+.trap{border:2px solid var(--violet);border-radius:16px;background:var(--violet-soft);padding:22px;display:flex;flex-direction:column;gap:18px}
+.trap .eyebrow{color:var(--violet)}
+.trap h2{font-size:clamp(1.3rem,3vw,1.5rem);font-weight:800}
+.personal{font-weight:600;padding:12px 14px;border-radius:10px;background:#fff;border-left:4px solid var(--violet)}
+.duo{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:14px;align-items:stretch;margin:0;padding:0;list-style:none}
+.concept{background:#fff;border:1px solid var(--violet-line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.concept .name{font-size:.8rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--violet)}
+.concept .q{font-size:1.3rem;font-weight:800;color:var(--navy);line-height:1.2}
+.concept .def{color:var(--muted);font-size:.95rem}
+.concept .ex{font-size:.95rem;border-top:1px dashed var(--violet-line);padding-top:8px;margin-top:4px}
+.then{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--violet);font-weight:800;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em}
+.link{font-size:1.05rem}
+.link strong{color:var(--violet)}
+.other{border-top:1px solid var(--violet-line);padding-top:16px;display:flex;flex-direction:column;gap:6px}
+.other h3{font-size:1.05rem;font-weight:700}
+.note{font-size:.9rem;color:var(--muted)}
+
+/* Bouton « Piège fréquent » : grossit au survol, s'enfonce au clic */
+.trap-cta{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px}
+.btn-trap{font:inherit;font-weight:700;font-size:1.15rem;min-height:52px;padding:12px 28px;border:0;border-radius:12px;background:var(--violet);color:#fff;display:inline-flex;align-items:center;gap:10px;box-shadow:0 8px 20px rgb(129 4 100 / 28%);transform:scale(1);transition:transform .15s ease,box-shadow .15s ease,filter .15s ease}
+.btn-trap:hover{transform:scale(1.06);box-shadow:0 12px 26px rgb(129 4 100 / 34%);filter:brightness(1.1)}
+.btn-trap:active{transform:scale(.93);box-shadow:0 3px 8px rgb(129 4 100 / 30%);transition-duration:.06s}
+.btn-trap:focus-visible{outline:3px solid var(--navy);outline-offset:4px}
+
+/* Fenêtre surgissante (modèle « Le contexte ») */
+.trap-dialog{width:min(880px,calc(100% - 32px));max-height:calc(100% - 32px);padding:0;border:0;border-radius:20px;background:transparent;overflow:auto;box-shadow:0 24px 60px rgb(16 20 72 / 28%)}
+.trap-dialog::backdrop{background:rgb(16 20 72 / 28%);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px)}
+.trap-dialog[open]{animation:pop .22s ease-out}
+.trap-dialog[open]::backdrop{animation:fade .22s ease-out}
+@keyframes pop{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.pop{position:relative;overflow:hidden;background:#fff;border-radius:20px;padding:36px 46px 30px;display:flex;flex-direction:column;gap:20px}
+.pop-deco{position:absolute;pointer-events:none}
+.pop-deco.tl{top:0;left:0;width:110px}.pop-deco.tr{top:0;right:0;width:100px}
+.pop-deco.bl{bottom:0;left:0;width:110px}.pop-deco.br{bottom:0;right:0;width:130px}
+.pop>*:not(.pop-deco){position:relative;z-index:1}
+.pop h2{font-size:1.3rem;font-weight:800;color:var(--navy);padding-right:44px}
+.pop p{margin:0}
+.pop-close{position:absolute!important;top:30px;right:32px;display:grid;place-items:center;width:34px;height:34px;border:0;border-radius:50%;background:var(--navy);color:#fff;box-shadow:0 0 0 3px #fff;transition:transform .15s ease}
+.pop-close::after{content:"";position:absolute;inset:-6px}
+.pop-close:hover{transform:scale(1.1)}
+.pop-close:active{transform:scale(.9)}
+.pop-close:focus-visible{outline:3px solid var(--violet);outline-offset:3px}
+.pop-foot{display:flex;justify-content:flex-end;margin-top:4px}
+/* Contenu « piège fréquent » (présentation à deux encadrés) dans la fenêtre */
+.pop .eyebrow{margin-bottom:4px}
+.pop h2{font-size:clamp(1.3rem,3vw,1.55rem)}
+.pop .personal{background:var(--violet-soft)}
+.pop .concept{background:#fdf8fb}
+.pop .other p{color:var(--text)}
+.pop-foot .btn{border-radius:8px;transition:transform .15s ease,filter .15s ease}
+.pop-foot .btn:hover{transform:scale(1.05)}
+.pop-foot .btn:active{transform:scale(.94)}
+
+/* ── Exercice 1.2 : sept situations, quatre catégories ── */
+[data-cat="A"]{--c:#34509f;--cbg:#e3eaf9}
+[data-cat="B"]{--c:#a8401f;--cbg:#fde3da}
+[data-cat="C"]{--c:#3f6a48;--cbg:#e2ede4}
+[data-cat="D"]{--c:#64479f;--cbg:#ebe4f7}
+.lead .cl-inline{font-weight:800;color:var(--navy)}
+.cats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin:0;padding:0;list-style:none}
+.cat{position:relative;display:flex;align-items:center;gap:16px;width:100%;min-height:88px;padding:14px 18px;border:2px solid transparent;border-radius:16px;background:#fffdf9;box-shadow:0 8px 24px rgb(16 20 72 / 7%);font:inherit;font-weight:700;font-size:1.12rem;line-height:1.2;color:var(--navy);text-align:left;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
+.cat-l{flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:12px;background:var(--cbg);color:var(--c);font-size:1.5rem;font-weight:800;transition:background .15s ease,color .15s ease}
+.cat:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgb(16 20 72 / 12%)}
+.cat:focus-visible{outline:2px dashed var(--muted);outline-offset:5px}
+/* Choix unique : dès qu'une catégorie est choisie, les trois autres s'estompent */
+.cats.has-choice .cat:not([aria-pressed="true"]){opacity:.55;box-shadow:none}
+.cats.has-choice .cat:not([aria-pressed="true"]):hover,.cats.has-choice .cat:not([aria-pressed="true"]):focus-visible{opacity:.85}
+.cat:active{transform:scale(.96)}
+.cat[aria-pressed="true"]{border-color:var(--c);background:#fff;box-shadow:0 0 0 4px var(--cbg),0 12px 28px rgb(16 20 72 / 12%)}
+.cat[aria-pressed="true"] .cat-l{background:var(--c);color:#fff}
+.cat-mark{position:absolute;top:-10px;right:-10px;display:none;place-items:center;width:28px;height:28px;border-radius:50%;font-size:.9rem;font-weight:800;color:#fff;background:var(--c);box-shadow:0 0 0 3px #fff}
+.cat[aria-pressed="true"] .cat-mark{display:grid}
+.cat[aria-disabled="true"]{cursor:var(--cursor-arrow);transform:none}
+.cat[aria-disabled="true"]:not([aria-pressed="true"]):not(.is-right){opacity:.5;box-shadow:none}
+.cat.is-right{border-color:var(--ok);box-shadow:0 0 0 4px var(--ok-bg)}
+.cat.is-right .cat-mark{display:grid;background:var(--ok)}
+.cat.is-wrong{border-color:var(--ko);box-shadow:0 0 0 4px var(--ko-bg)}
+.cat.is-wrong .cat-l{background:var(--ko);color:#fff}
+.cat.is-wrong .cat-mark{display:grid;background:var(--ko)}
+
+.prop-card{padding:26px 22px}
+.prop{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:20px;align-items:center}
+.prop-body{border-left:1px solid var(--line);border-right:1px solid var(--line);padding:2px 26px;min-height:130px;display:flex;flex-direction:column;justify-content:center;gap:14px}
+.prop-body[data-anim]{animation:slide .25s ease-out}
+@keyframes slide{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
+.chip{align-self:flex-start;background:var(--violet-soft);color:var(--violet);font-weight:700;font-size:1.05rem;border-radius:10px;padding:6px 18px}
+.prop-text{font-size:1.25rem;color:var(--navy);line-height:1.45}
+.arrow{display:grid;place-items:center;width:50px;height:50px;border-radius:50%;border:1.5px solid var(--line);background:#fff;color:var(--violet);transition:transform .15s ease,filter .15s ease}
+.arrow.next{background:var(--violet);border-color:var(--violet);color:#fff;box-shadow:0 6px 16px rgb(129 4 100 / 25%)}
+.arrow:hover{transform:scale(1.08)}
+.arrow:active{transform:scale(.92)}
+.arrow[aria-disabled="true"]{opacity:.35;transform:none;cursor:var(--cursor-arrow);box-shadow:none}
+.feedback{display:flex;gap:12px;align-items:flex-start;border-radius:12px;padding:12px 16px;font-size:1rem}
+.feedback.ok{background:var(--ok-bg);border-left:4px solid var(--ok)}
+.feedback.ko{background:var(--ko-bg);border-left:4px solid var(--ko)}
+.feedback .fb-title{display:block;font-weight:800}
+.feedback.ok .fb-title{color:var(--ok)}.feedback.ko .fb-title{color:var(--ko)}
+.feedback .fb-sym{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;color:#fff;font-weight:800}
+.feedback.ok .fb-sym{background:var(--ok)}.feedback.ko .fb-sym{background:var(--ko)}
+
+.dots{display:flex;flex-wrap:wrap;justify-content:center;gap:18px;margin:0;padding:0;list-style:none}
+.dot{position:relative;width:54px;height:54px;border-radius:50%;border:1.5px solid var(--line);background:#fff;font:inherit;font-size:1.25rem;font-weight:800;color:var(--navy);transition:transform .15s ease}
+.dot:hover{transform:scale(1.1)}
+.dot:active{transform:scale(.92)}
+.dot.chosen{border-color:var(--violet-line);background:var(--violet-soft)}
+.dot[aria-current="step"]{background:var(--violet);border-color:var(--violet);color:#fff}
+.dot .dot-mark{position:absolute;top:-8px;right:-8px;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;font-size:.9rem;font-weight:800;color:#fff;box-shadow:0 0 0 2px #fff}
+.dot .dot-mark:empty{display:none}
+.dot[data-cat] .dot-mark{background:var(--c)}
+.ex2-end{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:10px 18px;margin-top:-6px}
+#check2[aria-disabled="true"]{opacity:.55;border-color:var(--line);color:var(--muted)}
+.count2{color:var(--muted);font-size:.95rem}
+#h-ex2{font-size:clamp(2rem,3.6vw,2.9rem)}
+@media (min-width:1025px){#exercice2 .hero{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}}
+.dot.ok .dot-mark{background:var(--ok)}.dot.ko .dot-mark{background:var(--ko)}
+
+.ex2-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px}
+.tip{flex:1 1 440px;display:flex;align-items:center;gap:14px;background:#f8f0f5;border-radius:12px;padding:12px 18px;font-size:.95rem;color:var(--text)}
+.tip svg{flex:none;color:var(--violet)}
+.tip-top{flex:none;margin-top:-6px}
+.ex2-foot{justify-content:center;margin-top:-4px}
+.cats-actions{display:flex;justify-content:flex-end;margin-top:-10px}
+.btn-soft{background:var(--violet-soft);border-color:var(--violet-line);color:var(--violet);min-height:42px;padding:8px 18px;font-size:.98rem;transition:transform .15s ease,background .15s ease}
+.btn-soft:hover{background:#f0dbe9;border-color:var(--violet);transform:scale(1.04)}
+.btn-soft:active{transform:scale(.95)}
+.tip kbd{min-width:22px;height:22px}
+.btn.big{min-height:56px;padding:12px 34px;font-size:1.15rem;border-radius:999px;transition:transform .15s ease,filter .15s ease}
+.btn.big:hover{transform:scale(1.04)}
+.btn.big:active{transform:scale(.95)}
+
+/* Bilan 1.2 */
+.sit-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.sit{border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.sit.ko{border-color:#f1c3b6;background:#fffaf8}
+.sit-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 18px;align-items:baseline}
+.sit-head .verdict{white-space:nowrap}
+.sit-text{color:var(--navy);font-weight:600}
+.sit-answers{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:.95rem;color:var(--muted)}
+.pill{display:inline-flex;align-items:center;gap:6px;font-weight:700;color:var(--navy)}
+.cl{flex:none;display:inline-grid;place-items:center;min-width:26px;height:26px;border-radius:7px;background:var(--cbg);color:var(--c);font-weight:800}
+.sit-why{color:var(--text);font-size:.95rem;border-top:1px dashed var(--line);padding-top:8px}
+.recap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:0;padding:0;list-style:none}
+.recap li{background:#fff;border:1px solid var(--line);border-left:5px solid var(--c);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.recap .pill{font-size:1.05rem}
+.recap p{color:var(--text);font-size:.95rem}
+.recap-card h2{font-size:1.3rem;font-weight:800}
+/* Piège fréquent : texte légèrement agrandi */
+#trap-dialog{width:min(940px,calc(100% - 32px))}
+#trap-dialog .eyebrow{font-size:1rem}
+#trap-dialog h2{font-size:clamp(1.4rem,3vw,1.7rem)}
+#trap-dialog .personal{font-size:1.1rem}
+#trap-dialog .concept .name{font-size:1.15rem;letter-spacing:.1em}
+#trap-dialog .concept .q{font-size:1.45rem}
+#trap-dialog .concept .def,#trap-dialog .concept .ex{font-size:1.05rem}
+#trap-dialog .link{font-size:1.15rem}
+#trap-dialog .other h3{font-size:1.15rem}
+#trap-dialog .other p{font-size:1.06rem}
+#trap-dialog .pop-foot .btn{font-size:1.1rem;min-height:50px;padding:12px 28px}
+.retain-dialog{width:min(760px,calc(100% - 32px))}
+.retain-dialog .pop{padding:42px 52px 34px;gap:24px}
+.retain-dialog .eyebrow{font-size:1.05rem}
+.retain-dialog h2{font-size:clamp(1.5rem,3.2vw,1.85rem);padding-right:48px}
+.retain-dialog .personal{font-size:clamp(1.15rem,2.4vw,1.4rem);line-height:1.55;padding:20px 24px;border-left-width:5px}
+.retain-dialog .pop-foot .btn{font-size:1.15rem;min-height:52px;padding:12px 30px}
+.retain-dialog .pop-close{top:38px;right:40px;width:38px;height:38px}
+@media (max-width:720px){.retain-dialog .pop{padding:30px 22px 24px}.retain-dialog .pop-close{top:26px;right:18px}}
+#recap-end{height:1px}
+@media (max-width:1100px){.cats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:720px){
+  .prop{grid-template-columns:1fr 1fr;grid-template-areas:"b b" "p n";row-gap:14px}
+  .prop-body{grid-area:b;border:0;padding:0;min-height:0}
+  .arrow.prev{grid-area:p;justify-self:start}.arrow.next{grid-area:n;justify-self:end}
+  .prop-text{font-size:1.1rem}
+  .cat{min-height:72px;font-size:1rem;gap:12px;padding:12px}
+  .cat-l{width:42px;height:42px;font-size:1.25rem}
+  .dots{gap:8px}.dot{width:40px;height:40px;font-size:1.05rem}.dot .dot-mark{width:20px;height:20px;font-size:.72rem;top:-7px;right:-7px}
+  .ex2-foot .btn.big{width:100%}
+  .recap{grid-template-columns:1fr}
+}
+@media (max-width:420px){.cats{grid-template-columns:1fr}}
+
+/* Corrigé 1.2 : revue dynamique */
+.score-line{padding-left:4px;margin-top:-6px}
+.score-line .score-num{font-size:2.2rem}
+.rev-body{gap:16px;min-height:0}
+.rev-body .chip:focus{outline:none}
+.rev-body .chip:focus-visible{outline:3px solid var(--navy);outline-offset:3px}
+.rev-duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:stretch}
+.rev-panel{display:flex;flex-direction:column;gap:12px;border:2px solid var(--line);border-radius:16px;padding:16px 18px;background:#fff}
+.rev-panel.is-ok{border-color:var(--ok);background:#f6fbf8}
+.rev-panel.is-ko{border-color:var(--ko);background:#fffaf8}
+.rev-panel.rev-right{border-color:var(--violet-line);background:#fdf8fb}
+.rev-lbl{font-size:.82rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0}
+.rev-cat{margin:0}
+.rev-tag{display:inline-flex;align-items:center;gap:12px;font-size:1.15rem;font-weight:800;color:var(--navy)}
+.rev-tag .cl{width:44px;height:44px;border-radius:11px;font-size:1.3rem}
+.rev-note{flex:1;display:flex;flex-direction:column;gap:4px;border-top:1px dashed var(--line);padding-top:12px;font-size:1rem;color:var(--text)}
+.rev-note-title{font-weight:800;color:var(--navy)}
+.rev-note-title.verdict{font-size:1.05rem}
+.recap-wrap{padding:20px 24px;gap:12px}
+.recap-title{font-size:1.05rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.recap-table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:.92rem}
+.recap-table th,.recap-table td{padding:6px 12px;text-align:left;border-top:1px solid var(--line);vertical-align:middle}
+.recap-table thead th{border-top:0;background:var(--violet-soft);color:var(--navy);font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.recap-table tbody th{font-weight:600}
+.recap-table tr.cur td,.recap-table tr.cur th{background:#fdf3f9}
+.recap-table .pill{font-weight:600;gap:8px}
+.recap-table .cl{min-width:24px;height:24px;font-size:.85rem}
+.recap-table td.verdict{display:table-cell;white-space:nowrap}
+.row-go{font:inherit;font-weight:700;color:var(--violet);background:none;border:0;padding:4px 0;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--violet-line)}
+.row-go:hover{text-decoration-color:var(--violet)}
+@media (max-width:900px){.rev-duo{grid-template-columns:1fr}}
+@media (max-width:720px){
+  .recap-table .cl-name{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .recap-table th,.recap-table td{padding:6px 8px}
+  .recap-wrap{padding:16px}
+}
+
+/* ── Synthèse « À retenir » ── */
+.syn-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:stretch}
+.syn-card>.syn-trap:last-child{margin-top:auto}
+.syn-card{gap:18px}
+.syn-head{display:flex;gap:16px;align-items:center}
+.syn-num{flex:none;display:grid;place-items:center;width:56px;height:56px;border-radius:16px;background:var(--violet);color:#fff;font-weight:800;font-size:1.2rem}
+.syn-head h2{font-size:clamp(1.25rem,2.4vw,1.5rem);font-weight:800}
+.syn-head .eyebrow{font-size:.8rem}
+.syn .personal{background:var(--violet-soft);font-size:1.05rem}
+.syn-duo{grid-template-columns:1fr;gap:10px}
+.syn-duo .then{flex-direction:row;gap:8px}
+.syn-duo .then svg{transform:rotate(90deg)}
+.syn-duo .concept .name{font-size:1rem}
+.syn-duo .concept .q{font-size:1.2rem}
+.syn-trap{border-left:4px solid var(--coral);background:#fff6f2;border-radius:10px;padding:12px 16px;display:flex;flex-direction:column;gap:4px}
+.syn-trap h3{display:flex;align-items:center;gap:8px;font-size:1.02rem;font-weight:800;color:var(--navy)}
+.syn-trap h3 svg{flex:none;color:#c2512e}
+.syn-cats{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.syn-cats li{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-left:5px solid var(--c);border-radius:10px;padding:8px 12px;background:#fff;font-size:.98rem}
+.syn-cats .cl{width:32px;height:32px;font-size:1rem}
+.syn-cats b{display:block;color:var(--navy)}
+@media (max-width:1024px){.syn-grid{grid-template-columns:1fr}}
+@media (min-width:1025px) and (max-width:1300px){.syn-duo .concept{padding:14px}}
+/* ── Visite guidée ── */
+.tour{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;background:transparent;overflow:hidden}
+.tour::backdrop{background:transparent}
+.tour-spot{position:fixed;left:50%;top:50%;width:0;height:0;border-radius:14px;box-shadow:0 0 0 200vmax rgb(16 20 72 / 52%);pointer-events:none;transition:left .3s ease,top .3s ease,width .3s ease,height .3s ease}
+.tour-spot.has-target{outline:3px solid #fff;outline-offset:0}
+.tour-bubble{position:fixed;width:min(410px,calc(100vw - 32px));background:#fff;border-radius:18px;padding:26px 26px 20px;box-shadow:0 20px 50px rgb(16 20 72 / 30%);overflow:hidden;display:flex;flex-direction:column;gap:10px;transition:left .3s ease,top .3s ease}
+.tour-bubble[data-anim]{animation:pop .22s ease-out}
+.tour-bubble .pop-deco.tl{width:80px}.tour-bubble .pop-deco.br{width:96px}
+.tour-bubble>*:not(.pop-deco){position:relative;z-index:1}
+.tour-step{font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--violet)}
+.tour-bubble h2{font-size:1.25rem;font-weight:800}
+.tour-text{color:var(--text);font-size:1rem}
+.tour-dots{display:flex;gap:6px;margin:4px 0 2px;padding:0;list-style:none}
+.tour-dots li{width:8px;height:8px;border-radius:50%;background:var(--violet-line);transition:width .2s ease,background .2s ease}
+.tour-dots li.on{width:22px;border-radius:999px;background:var(--violet)}
+.tour-foot{display:flex;align-items:center;gap:10px;margin-top:6px}
+.tour-skip{margin-right:auto;font:inherit;font-weight:600;color:var(--muted);background:none;border:0;padding:10px 6px;min-height:44px;text-decoration:underline;text-underline-offset:3px;transition:transform .15s ease,color .15s ease}
+.tour-skip:hover{color:var(--violet);transform:scale(1.05)}
+.tour-skip:active{transform:scale(.94)}
+.tour-foot .btn{min-height:42px;padding:8px 18px;font-size:1rem;border-radius:8px;transition:transform .15s ease,filter .15s ease}
+.tour-foot .btn:hover{transform:scale(1.05)}
+.tour-foot .btn:active{transform:scale(.94)}
+/* ── Panneau de gauche (charte, couleur violette) ── */
+.av-menu{position:fixed;inset:0 auto 0 0;z-index:60;display:flex;font-family:"Fira Sans",system-ui,sans-serif;pointer-events:none}
+.av-menu-rail{position:relative;z-index:2;width:var(--menu-rail);display:flex;flex-direction:column;align-items:center;gap:14px;padding:14px 0 22px;background:var(--violet);color:#fff;pointer-events:auto;box-shadow:2px 0 14px rgb(129 4 100 / 18%)}
+.av-menu-toggle,.av-menu-home,.av-menu-close{display:grid;place-items:center;width:46px;height:46px;border:0;border-radius:12px;background:none;color:inherit;cursor:var(--cursor-hand,pointer);text-decoration:none;transition:background .15s ease}
+.av-menu-toggle:hover,.av-menu-home:hover{background:rgb(255 255 255 / 12%)}
+.av-menu-home{color:rgb(255 255 255 / 72%)}
+.av-menu-icon{display:block;background:center / contain no-repeat}
+.av-menu-icon.is-burger{width:31px;height:26px;background-image:url("assets/menu/burger.webp")}
+.av-menu-icon.is-home{width:28px;height:27px;background-image:url("assets/menu/accueil.webp")}
+.av-menu-progress{margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:8px}
+.av-menu-percent{display:grid;place-items:center;width:52px;height:52px;border:3px solid var(--violet);border-radius:50%;background:#fff;box-shadow:0 0 0 3px #fff;color:var(--navy);font-size:.82rem;font-weight:800}
+.av-menu-track{position:relative;width:18px;height:clamp(90px,28vh,200px);border:3px solid var(--violet);border-radius:999px;background:#fff;box-shadow:0 0 0 2px #fff;overflow:hidden}
+.av-menu-fill{position:absolute;inset:auto 0 0;height:0;border-radius:inherit;background:var(--violet);transition:height .5s ease}
+.av-menu-panel{position:relative;z-index:1;width:var(--menu-panel);display:flex;flex-direction:column;padding:22px 26px 22px 28px;background:var(--violet-soft);color:var(--violet);border-radius:0 26px 26px 0;box-shadow:10px 0 34px rgb(129 4 100 / 30%);transform:translateX(-105%);visibility:hidden;transition:transform .28s ease,visibility 0s linear .28s;pointer-events:auto}
+.av-menu.is-open .av-menu-panel{transform:none;visibility:visible;transition:transform .28s ease}
+.av-menu-title{margin:6px 0 22px;font-size:1.35rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--violet)}
+.av-menu-nav{flex:1;overflow-y:auto;margin:0 -10px}
+.av-menu-list{list-style:none;margin:0;padding:0 10px;display:grid;gap:4px}
+.av-menu-list a{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 12px;border-radius:12px;color:var(--violet);font-weight:600;line-height:1.3;text-decoration:none;transition:background .15s ease,color .15s ease}
+.av-menu-list a:hover{background:rgb(129 4 100 / 8%);color:var(--violet)}
+.av-menu-list a.active{background:#fff;color:var(--violet);font-weight:800;box-shadow:inset 4px 0 0 var(--violet),0 4px 14px rgb(129 4 100 / 10%)}
+.av-menu-list a[aria-disabled="true"]{color:#93437f}
+.av-menu-check{flex:none;display:grid;place-items:center;width:28px;height:28px;border:2px solid #b77ba5;border-radius:50%}
+.av-menu-check svg{display:none}
+.av-menu-list a.is-done .av-menu-check{border-color:var(--violet);background:var(--violet);color:#fff}
+.av-menu-list a.is-done .av-menu-check svg{display:block}
+/* Cadenas fermé tant que l'étape n'est pas accessible */
+.av-menu-list a .av-menu-check svg.av-lock{display:none}
+.av-menu-list a[aria-disabled="true"] .av-menu-check{border-color:transparent}
+.av-menu-list a[aria-disabled="true"] .av-menu-check svg.av-lock{display:block}
+.av-menu-list a[aria-disabled="true"] .av-menu-check svg:not(.av-lock){display:none}
+.av-menu-foot{margin-top:18px;padding-top:16px;border-top:1px solid var(--violet-line);display:grid;gap:14px;font-size:.85rem}
+.av-menu-module{display:flex;gap:18px;color:var(--violet);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.av-menu-close{position:absolute;top:50%;right:-26px;width:44px;height:64px;transform:translateY(-50%);border-radius:0 16px 16px 0;background:var(--violet-soft);color:var(--violet);box-shadow:8px 0 18px rgb(129 4 100 / 14%)}
+.av-menu-close:hover{background:#f0dbe9}
+.av-menu-close svg{transition:transform .15s ease}
+.av-menu-close:hover svg{transform:translateX(-3px)}
+.av-menu-backdrop{position:fixed;inset:0;z-index:0;background:rgb(129 4 100 / 22%);opacity:0;visibility:hidden;transition:opacity .28s ease,visibility 0s linear .28s}
+.av-menu.is-open .av-menu-backdrop{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .28s ease}
+.av-menu :focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+.av-menu-panel :focus-visible{outline-color:var(--navy)}
+
+/* ── Responsive ── */
+@media (max-width:1560px){
+  .topbar{font-size:1rem}
+  .brand{gap:20px}
+  .tool{padding:6px 9px;gap:6px}
+}
+@media (max-width:1280px){
+  .tool .tool-label,.zoom-name .tool-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .tool{min-width:44px;justify-content:center}
+}
+@media (max-width:1200px){
+  .decor.tl{width:150px}.decor.bl{width:150px}.decor.br{width:140px}
+}
+@media (max-width:1024px){
+  .hero{grid-template-columns:minmax(0,1fr) minmax(0,300px);padding-left:0}
+  .hero-img{margin-right:0}
+  #corrige>div:first-child{padding-left:0}
+  .decor{opacity:.55}
+}
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .hero-img{display:none}
+  .decor{display:none}
+  .board{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:16px}
+  .arow{grid-template-columns:auto auto;justify-content:start;column-gap:20px}
+  .arow.head{display:none}
+  .arow .t{grid-column:1/-1}
+  .arow .r{grid-column:1/-1}
+  .arow .lbl{display:inline-block}
+  .arow .r .lbl{display:none}
+}
+@media (max-width:820px){
+  .duo{grid-template-columns:1fr}
+  .then{flex-direction:row}
+  .then svg{transform:rotate(90deg)}
+}
+@media (max-width:720px){
+  :root{--menu-rail:0px;--menu-panel:calc(100vw - 40px)}
+  .av-menu-rail{position:fixed;top:10px;left:10px;width:auto;padding:0;background:var(--violet);border-radius:14px}
+  .av-menu-home,.av-menu-progress{display:none}
+  .av-menu-panel{padding-top:70px}
+  .topbar{padding:10px 12px 10px 70px;font-size:1rem}
+  .brand img{height:32px}
+  .count{font-size:1.1rem}
+  .kbd-help svg{display:none}
+  .crumb{display:none}
+  .tool .tool-label,.zoom-name .tool-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .skip{left:70px}
+  .board{grid-template-columns:1fr}
+  .item[aria-pressed="true"],.item.def[aria-pressed="true"]{transform:none}
+  .wrap{padding:24px 16px 48px;gap:22px}
+  .card,.trap{padding:16px}
+  .pop{padding:28px 20px 22px}
+  .pop-close{top:22px!important;right:18px}
+  .bar .actions{width:100%}
+  .bar .btn{flex:1 1 auto}
+  .card-foot .btn{flex:1 1 auto}
+}
+@media (max-width:360px){
+  .brand img{height:24px}
+  .item{padding:10px}
+  .item .key{width:28px;height:28px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+@media (forced-colors:active){
+  .item[aria-pressed="true"]{outline:3px solid Highlight}
+  .item.paired .slot,.letter{border:1px solid CanvasText}
+}
+/* ── Page de garde (accueil) ── */
+.decor-home{position:fixed;z-index:0;pointer-events:none;user-select:none;display:none}
+body.is-home .decor-home{display:block}
+body.is-home .decor{display:none}
+body.is-home{background:#fdf8f2}
+.dh-tl{top:66px;left:var(--menu-rail);width:100px}
+.dh-bl{bottom:0;left:var(--menu-rail);width:295px;-webkit-mask-image:linear-gradient(to right,#000 80%,transparent);mask-image:linear-gradient(to right,#000 80%,transparent)}
+.dh-br{bottom:0;right:0;width:307px;-webkit-mask-image:linear-gradient(to left,#000 80%,transparent);mask-image:linear-gradient(to left,#000 80%,transparent)}
+.home{max-width:1060px;padding-top:56px;gap:44px}
+.home-head{display:flex;flex-direction:column;gap:22px;padding:0 40px}
+.home-head h1{font-size:clamp(2.1rem,4.6vw,3.6rem);line-height:1.1}
+.home-head h1::before{content:"";display:block;width:92px;height:8px;border-radius:8px;background:var(--coral);margin-bottom:26px}
+.home-head h1::after{display:none}
+.tag-time{align-self:flex-start;margin:0;font-size:1.1rem;font-weight:700;color:var(--navy);background:#dfe2fe;border:0;padding:8px 22px 8px 14px}
+.tag-time svg{color:var(--navy)}
+.home-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px;margin:0;padding:0;list-style:none}
+.home-card{display:flex;flex-direction:column;align-items:center;gap:18px;padding:22px 22px 26px;border-radius:26px;background:#fdf9f4;box-shadow:0 14px 40px rgb(16 20 72 / 9%);transition:transform .2s ease,box-shadow .2s ease}
+.home-card:hover{transform:translateY(-4px);box-shadow:0 18px 46px rgb(16 20 72 / 13%)}
+.home-card img{display:block;width:100%;max-width:400px;height:auto;aspect-ratio:405/275;object-fit:contain}
+.home-btn{min-height:62px;width:min(320px,100%);border-radius:999px;font-size:1.45rem;font-weight:700;justify-content:center;gap:40px;transition:transform .15s ease,filter .15s ease}
+.home-btn:hover{transform:scale(1.05)}
+.home-btn:active{transform:scale(.95)}
+@media (max-width:1024px){.decor-home{opacity:.6}}
+@media (max-width:820px){.home-cards{grid-template-columns:1fr;gap:24px}.home-head{padding:0}.decor-home{display:none!important}}
+@media print{.av-menu,.tools,.skip,.decor,.decor-home,.trap-cta{display:none!important}body{padding-left:0}}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+
+<aside class="av-menu" id="menu" aria-label="Navigation du module">
+  <div class="av-menu-rail">
+    <button type="button" class="av-menu-toggle" aria-expanded="false" aria-controls="menu-panel" aria-label="Ouvrir le menu"><span class="av-menu-icon is-burger" aria-hidden="true"></span></button>
+    <a class="av-menu-home" id="home" href="#" aria-label="Accueil du module" title="Accueil du module"><span class="av-menu-icon is-home" aria-hidden="true"></span></a>
+    <div class="av-menu-progress" role="img" id="progress" aria-label="Progression : 0 %"><span class="av-menu-percent" id="percent" aria-hidden="true">0 %</span><span class="av-menu-track" aria-hidden="true"><span class="av-menu-fill" id="gauge"></span></span></div>
+  </div>
+  <div class="av-menu-panel" id="menu-panel" role="dialog" aria-modal="true" aria-labelledby="menu-title" inert>
+    <h2 class="av-menu-title" id="menu-title">Menu</h2>
+    <nav class="av-menu-nav" aria-label="Étapes de l'activité"><ol class="av-menu-list">
+      <li><a href="#exercice" id="nav-ex" class="active" aria-current="page"><span>Exercice 1.1 · Les mots du cours</span><span class="av-menu-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 12.75 5 5 9.5-11"/></svg><span class="sr-only" id="nav-ex-state">, à faire</span></span></a></li>
+      <li><a href="#corrige" id="nav-co" aria-disabled="true"><span>Corrigé 1.1 et piège fréquent</span><span class="av-menu-check"><svg class="av-lock" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 12.75 5 5 9.5-11"/></svg><span class="sr-only" id="nav-co-state">, accessible après l'exercice</span></span></a></li>
+      <li><a href="#exercice2" id="nav-ex2"><span>Exercice 1.2 · Sept situations, quatre catégories</span><span class="av-menu-check"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 12.75 5 5 9.5-11"/></svg><span class="sr-only" id="nav-ex2-state">, à faire</span></span></a></li>
+      <li><a href="#corrige2" id="nav-co2" aria-disabled="true"><span>Corrigé 1.2</span><span class="av-menu-check"><svg class="av-lock" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 12.75 5 5 9.5-11"/></svg><span class="sr-only" id="nav-co2-state">, accessible après l'exercice</span></span></a></li>
+      <li><a href="#retenir" id="nav-ret" aria-disabled="true"><span>À retenir</span><span class="av-menu-check"><svg class="av-lock" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 12.75 5 5 9.5-11"/></svg><span class="sr-only" id="nav-ret-state">, accessible après les deux corrigés</span></span></a></li>
+    </ol></nav>
+    <div class="av-menu-foot"><div class="av-menu-module"><span>Négocier ou défendre</span></div></div>
+    <button type="button" class="av-menu-close" aria-label="Fermer le menu"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14.5 6-6 6 6 6"/></svg></button>
+  </div>
+  <div class="av-menu-backdrop"></div>
+</aside>
+
+<header class="topbar">
+  <div class="brand">
+    <img src="assets/logo/logo-cci-bleu.png" alt="Chambre de commerce et d'industrie">
+    <p class="crumb"><b>Négocier ou défendre</b> <span id="crumb-step">· 1.1 Les mots du cours</span></p>
+  </div>
+  <div class="tools">
+    <button type="button" class="tool" id="tour-btn" aria-haspopup="dialog" title="Visite guidée">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg>
+      <span class="tool-label">Visite guidée</span>
+    </button>
+    <div class="zoom-group" role="group" aria-label="Zoom du contenu" id="zoom">
+      <span class="zoom-name" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.6-4.6"/></svg><span class="tool-label">Zoom</span></span>
+      <button type="button" class="zoom-btn" id="zoom-out" aria-label="Réduire le zoom" title="Réduire"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+      <span class="zoom-val" id="zoom-val">100 %</span>
+      <button type="button" class="zoom-btn" id="zoom-in" aria-label="Agrandir le zoom" title="Agrandir"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg></button>
+    </div>
+    <button type="button" class="tool" id="fullscreen" title="Plein écran">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path id="fs-icon" d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+      <span class="tool-label" id="fs-label">Plein écran</span>
+    </button>
+    <button type="button" class="tool" id="sound" aria-pressed="false" title="Sons">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path id="sound-waves" d="m16 9 5 6m0-6-5 6"/></svg>
+      <span class="tool-label">Sons</span><span class="tool-label" id="sound-state" aria-hidden="true"> coupés</span>
+    </button>
+  </div>
+</header>
+
+<img class="decor tl" src="assets/decor-2/deco-haut-gauche.png" alt="" aria-hidden="true">
+<img class="decor bl" src="assets/decor-2/deco-bas-gauche.png" alt="" aria-hidden="true">
+<img class="decor br" src="assets/decor-2/deco-bas-droite.png" alt="" aria-hidden="true">
+
+<img class="decor-home dh-tl" src="assets/accueil/deco-haut-gauche.png" alt="" aria-hidden="true">
+<img class="decor-home dh-bl" src="assets/accueil/deco-bas-gauche.png" alt="" aria-hidden="true">
+<img class="decor-home dh-br" src="assets/accueil/deco-bas-droite.png" alt="" aria-hidden="true">
+
+<div id="contenu">
+<!-- ===== Vue 0 : page de garde (accueil) ===== -->
+<main class="wrap home" id="accueil" hidden>
+  <div class="home-head">
+    <h1 tabindex="-1" id="h-home">Négocier ou défendre :<br>adopter le bon vocabulaire</h1>
+    <p class="tag tag-time"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Durée : 15 min</p>
+  </div>
+  <ul class="home-cards">
+    <li class="home-card">
+      <img src="assets/accueil/illu-exercice-1.png" alt="" width="405" height="275">
+      <button type="button" class="btn primary home-btn" id="go-ex1" aria-label="Exercice 1 : les mots du cours">Exercice 1 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+    </li>
+    <li class="home-card">
+      <img src="assets/accueil/illu-exercice-2.png" alt="" width="370" height="250">
+      <button type="button" class="btn primary home-btn" id="go-ex2" aria-label="Exercice 2 : sept situations, quatre catégories">Exercice 2 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+    </li>
+  </ul>
+</main>
+
+<!-- ===== Vue 1 : l'exercice ===== -->
+<main class="wrap" id="exercice">
+  <div class="hero">
+    <div class="hero-txt">
+      <div>
+        <p class="eyebrow">Exercice 1.1</p>
+        <h1 tabindex="-1" id="h-ex">Les mots du cours</h1>
+      </div>
+      <p class="lead"><b>Consigne.</b> Associez chaque terme à sa définition. L'association se fait en choisissant un terme, puis la définition qui lui correspond.</p>
+      <ul class="meta" aria-label="Informations sur l'exercice">
+        <li class="tag"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Durée : 15 min</li>
+      </ul>
+      <p class="context">À l'issue de cette activité, vous serez capable de mobiliser le vocabulaire du cours et distinguer les notions de négociation, défense du prix et concession sans contrepartie.</p>
+    </div>
+    <figure class="hero-img" aria-hidden="true"><img src="assets/decor-2/illustration.png" alt="" width="657" height="355"></figure>
+  </div>
+
+  <section class="card" aria-labelledby="h-activite">
+    <h2 id="h-activite" class="sr-only">Activité d'association</h2>
+    <div class="bar">
+      <p class="count" id="count">0 terme associé sur 8</p>
+      <div class="actions">
+        <button type="button" class="btn" id="reset">Effacer les réponses</button>
+      </div>
+    </div>
+
+    <p class="kbd-help" id="kbd-help"><b>Au clavier :</b> <kbd>↑</kbd> <kbd>↓</kbd> parcourent une colonne, <kbd>←</kbd> <kbd>→</kbd> passent d'une colonne à l'autre, <kbd>Entrée</kbd> ou <kbd>Espace</kbd> choisissent un élément, <kbd>Échap</kbd> annule le choix en cours. Choisir un élément déjà associé retire l'association.</p>
+
+    <div class="board">
+      <div class="col">
+        <h2 id="h-terms">Terme</h2>
+        <ul class="list" id="terms" aria-labelledby="h-terms" aria-describedby="kbd-help"></ul>
+      </div>
+      <div class="col">
+        <h2 id="h-defs">Définition</h2>
+        <ul class="list" id="defs" aria-labelledby="h-defs" aria-describedby="kbd-help"></ul>
+      </div>
+    </div>
+
+    <div class="card-foot">
+      <p class="hint" id="check-help">Le corrigé devient accessible quand les 8 termes sont associés.</p>
+      <button type="button" class="btn primary" id="check" aria-disabled="true" aria-describedby="check-help">Voir le corrigé <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+    </div>
+  </section>
+</main>
+
+<!-- ===== Vue 2 : le corrigé ===== -->
+<main class="wrap" id="corrige" hidden>
+  <div>
+    <p class="eyebrow">Corrigé modèle · Exercice 1.1</p>
+    <h1 tabindex="-1" id="h-co">Corrigé : les mots du cours</h1>
+    <p class="lead"><b>Auto-évaluation.</b> La comparaison des réponses avec le corrigé précède la lecture du piège fréquent.</p>
+  </div>
+
+  <section class="card" aria-labelledby="h-result">
+    <h2 id="h-result" class="sr-only">Résultat</h2>
+    <div class="score">
+      <p class="score-num" id="score">0<span> / 8</span></p>
+      <p id="score-msg"></p>
+    </div>
+    <ul class="answers" id="answers" aria-label="Détail des réponses"></ul>
+  </section>
+
+  <div class="trap-cta">
+    <button type="button" class="btn-trap" id="open-trap" aria-haspopup="dialog" aria-controls="trap-dialog"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>Piège fréquent</button>
+    <p class="note">Ouvre une fenêtre : ne pas confondre limite et BATNA.</p>
+  </div>
+
+  <div class="actions">
+    <button type="button" class="btn" id="back">Revoir les réponses</button>
+    <button type="button" class="btn" id="retry">Refaire l'exercice</button>
+    <button type="button" class="btn primary" id="to-ex2">Exercice suivant : 1.2 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+  </div>
+</main>
+
+<!-- ===== Vue 3 : exercice 1.2 ===== -->
+<main class="wrap" id="exercice2" hidden>
+  <div class="hero">
+    <div class="hero-txt">
+      <div>
+        <p class="eyebrow">Exercice 1.2</p>
+        <h1 tabindex="-1" id="h-ex2">Sept situations, quatre catégories</h1>
+      </div>
+      <p class="lead"><b>Votre mission.</b> Classez chaque situation dans une catégorie :<br><span class="cl-inline">A</span> Défense du prix · <span class="cl-inline">B</span> Négociation · <span class="cl-inline">C</span> Concession à fond perdu · <span class="cl-inline">D</span> Accord qui abîme la relation.</p>
+    </div>
+    <figure class="hero-img" aria-hidden="true"><img src="assets/decor-2/illustration-1-2.png" alt="" width="735" height="340"></figure>
+  </div>
+
+  <p class="tip tip-top" id="tip2"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg><span>Choisissez une catégorie, puis validez : la proposition suivante s'affiche. Les flèches et les pastilles permettent de revenir à tout moment sur une proposition. Au clavier : <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> <kbd>D</kbd> choisissent, <kbd>←</kbd> <kbd>→</kbd> changent de proposition.</span></p>
+
+  <ul class="cats" id="cats" role="group" aria-label="Catégories"></ul>
+  <div class="cats-actions"><button type="button" class="btn btn-soft" id="reset2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.9-6.2"/><path d="M20 4v5h-5"/></svg>Effacer toutes mes réponses</button></div>
+
+  <section class="card prop-card" id="prop-card" aria-labelledby="chip">
+    <div class="prop">
+      <button type="button" class="arrow prev" id="prev2" aria-label="Situation précédente"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14.5 6-6 6 6 6"/></svg></button>
+      <div class="prop-body" id="prop-body">
+        <h2 class="chip" id="chip">Proposition 1 sur 7</h2>
+        <p class="prop-text" id="prop-text"></p>
+      </div>
+      <button type="button" class="arrow next" id="next2" aria-label="Situation suivante"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg></button>
+    </div>
+  </section>
+
+  <nav aria-label="Situations"><ol class="dots" id="dots"></ol></nav>
+
+  <div class="ex2-foot" id="ex2-foot">
+    <button type="button" class="btn primary big" id="validate2" aria-disabled="true">Valider ma réponse <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+  </div>
+
+  <div class="ex2-end" id="ex2-end">
+    <p class="count2" id="count2">0 proposition validée sur 7</p>
+    <button type="button" class="btn" id="check2" aria-disabled="true" aria-describedby="count2">Voir le corrigé <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+  </div>
+</main>
+
+<!-- ===== Vue 4 : bilan 1.2 ===== -->
+<main class="wrap" id="corrige2" hidden>
+  <div>
+    <p class="eyebrow">Corrigé · Exercice 1.2</p>
+    <h1 tabindex="-1" id="h-co2">Corrigé : sept situations, quatre catégories</h1>
+    <p class="lead"><b>Auto-évaluation.</b> Passez en revue chaque proposition : votre réponse à gauche, la bonne réponse et sa justification à droite.</p>
+  </div>
+
+  <div class="score score-line">
+    <p class="score-num" id="score2">0<span> / 7</span></p>
+    <p id="score2-msg"></p>
+  </div>
+
+  <!-- Revue proposition par proposition -->
+  <section class="card prop-card review" id="review" aria-labelledby="rev-chip">
+    <div class="prop">
+      <button type="button" class="arrow prev" id="prev3" aria-label="Proposition précédente"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14.5 6-6 6 6 6"/></svg></button>
+      <div class="prop-body rev-body" id="rev-body">
+        <h2 class="chip" id="rev-chip" tabindex="-1">Proposition 1 sur 7</h2>
+        <p class="prop-text" id="rev-text"></p>
+        <div class="rev-duo">
+          <section class="rev-panel" id="rev-mine" aria-labelledby="rev-mine-lbl">
+            <h3 class="rev-lbl" id="rev-mine-lbl">Votre réponse</h3>
+            <p class="rev-cat" id="rev-mine-cat"></p>
+            <div class="rev-note" id="rev-verdict"></div>
+          </section>
+          <section class="rev-panel rev-right" aria-labelledby="rev-right-lbl">
+            <h3 class="rev-lbl" id="rev-right-lbl">Bonne réponse</h3>
+            <p class="rev-cat" id="rev-right-cat"></p>
+            <div class="rev-note"><b class="rev-note-title">Justification</b><span id="rev-just"></span></div>
+          </section>
+        </div>
+      </div>
+      <button type="button" class="arrow next" id="next3" aria-label="Proposition suivante"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg></button>
+    </div>
+  </section>
+  <nav aria-label="Propositions du corrigé"><ol class="dots" id="rev-dots"></ol></nav>
+
+  <!-- Récapitulatif compact -->
+  <section class="card recap-wrap" aria-labelledby="h-recap2">
+    <h2 id="h-recap2" class="recap-title">Récapitulatif</h2>
+    <table class="recap-table">
+      <thead><tr><th scope="col">Proposition</th><th scope="col">Votre réponse</th><th scope="col">Bonne réponse</th><th scope="col">Résultat</th></tr></thead>
+      <tbody id="recap-body"></tbody>
+    </table>
+    <div id="recap-end" aria-hidden="true"></div>
+  </section>
+
+  <div class="trap-cta">
+    <button type="button" class="btn-trap" id="open-retain" aria-haspopup="dialog" aria-controls="retain-dialog"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg>À retenir</button>
+    <p class="note">Ouvre une fenêtre : ce qu'est (et n'est pas) une négociation.</p>
+  </div>
+
+  <div class="actions">
+    <button type="button" class="btn" id="to-ex1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Retour à l'exercice 1.1</button>
+    <button type="button" class="btn" id="back2">Revoir les situations</button>
+    <button type="button" class="btn" id="retry2">Refaire l'exercice</button>
+    <button type="button" class="btn primary" id="to-ret" hidden>À retenir : la synthèse <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+  </div>
+</main>
+
+<!-- ===== Vue 5 : synthèse « À retenir » (après les deux corrigés) ===== -->
+<main class="wrap syn" id="retenir" hidden>
+  <div>
+    <h1 tabindex="-1" id="h-ret">À retenir</h1>
+    <p class="lead">Les pièges à éviter et les points essentiels des deux exercices, réunis sur une seule page.</p>
+  </div>
+
+  <div class="syn-grid">
+    <section class="card syn-card" aria-labelledby="syn1-title">
+      <div class="syn-head"><span class="syn-num" aria-hidden="true">1.1</span><div><h2 id="syn1-title">Ne pas confondre limite et BATNA</h2></div></div>
+      <ul class="duo syn-duo">
+        <li class="concept">
+          <span class="name">Limite</span>
+          <span class="q">Le point où l'on s'arrête</span>
+          <span class="def">Le seuil au-delà duquel on préfère ne pas conclure.</span>
+          <span class="ex">C'est une frontière : elle indique <b>quand</b> dire non.</span>
+        </li>
+        <li class="then" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>alors</li>
+        <li class="concept">
+          <span class="name">BATNA</span>
+          <span class="q">Ce que l'on fait alors</span>
+          <span class="def">Ce que l'on fait de mieux si aucun accord n'est trouvé (meilleure alternative à une entente négociée).</span>
+          <span class="ex">C'est un plan d'action : il indique <b>quoi faire</b> après ce non.</span>
+        </li>
+      </ul>
+      <p class="personal">Les deux sont liées : plus la BATNA est solide, plus la limite est facile à tenir.</p>
+      <div class="syn-trap">
+        <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>Autre piège : mettre tous les objectifs au même niveau</h3>
+        <p>L'objectif principal ne se négocie pas en dessous de sa limite. L'objectif secondaire peut être abandonné si le principal est atteint.</p>
+      </div>
+    </section>
+
+    <section class="card syn-card" aria-labelledby="syn2-title">
+      <div class="syn-head"><span class="syn-num" aria-hidden="true">1.2</span><div><h2 id="syn2-title">Ce qu'est (et n'est pas) une négociation</h2></div></div>
+      <p class="personal">On négocie dès qu'on cède quelque chose contre autre chose. Céder sans rien obtenir, ou obtenir en abîmant la relation, ce n'est pas réussir une négociation.</p>
+      <ul class="syn-cats">
+        <li data-cat="A"><span class="cl">A</span><span><b>Défense du prix</b> On valorise ce que comprend le prix ; rien n'est cédé.</span></li>
+        <li data-cat="B"><span class="cl">B</span><span><b>Négociation</b> Une concession en échange d'une contrepartie.</span></li>
+        <li data-cat="C"><span class="cl">C</span><span><b>Concession à fond perdu</b> On cède sans rien obtenir en échange.</span></li>
+        <li data-cat="D"><span class="cl">D</span><span><b>Accord qui abîme la relation</b> L'objectif est atteint par la contrainte, mais le client est perdu.</span></li>
+      </ul>
+      <div class="syn-trap">
+        <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>Piège fréquent : le geste commercial</h3>
+        <p>Un geste commercial n'est pas une négociation s'il ne rapporte rien. Une concession immédiate, sans rien en échange, apprend au client qu'il suffit d'hésiter.</p>
+      </div>
+      <div class="syn-trap">
+        <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>Piège fréquent : gagner par la contrainte</h3>
+        <p>Pas de négociation sans relation, et une issue positive pour chacun.</p>
+      </div>
+    </section>
+  </div>
+
+  <div class="actions">
+    <button type="button" class="btn" id="ret-co1">Revoir le corrigé 1.1</button>
+    <button type="button" class="btn" id="ret-co2">Revoir le corrigé 1.2</button>
+    <button type="button" class="btn primary" id="ret-home">Retour à l'accueil <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+  </div>
+</main>
+</div>
+
+<!-- ===== Fenêtre surgissante : piège fréquent ===== -->
+<dialog class="trap-dialog" id="trap-dialog" aria-labelledby="trap-title">
+  <section class="pop">
+    <!-- Décors de coins (aquarelle, feuillage, points) -->
+    <svg class="pop-deco tl" viewBox="0 0 110 80" aria-hidden="true"><path d="M0 0h68c4 10-6 18-16 22-12 5-14 16-26 22C14 50 6 46 0 54z" fill="#bcd0ec" opacity=".75"/><g fill="#8fa7d6"><circle cx="76" cy="12" r="2.2"/><circle cx="86" cy="18" r="1.8"/><circle cx="72" cy="22" r="1.6"/><circle cx="82" cy="28" r="2"/><circle cx="92" cy="10" r="1.5"/></g></svg>
+    <svg class="pop-deco tr" viewBox="0 0 100 90" aria-hidden="true"><path d="M30 0h70v60c-12 4-20-6-26-14-8-10-22-8-30-18C40 20 26 12 30 0z" fill="#f7c2b0" opacity=".8"/><path d="M100 34C84 34 70 40 60 52" stroke="#93ab97" stroke-width="2" fill="none"/><g fill="#93ab97"><ellipse cx="88" cy="26" rx="11" ry="4.5" transform="rotate(-30 88 26)"/><ellipse cx="74" cy="34" rx="11" ry="4.5" transform="rotate(-50 74 34)"/><ellipse cx="80" cy="46" rx="11" ry="4.5" transform="rotate(20 80 46)"/><ellipse cx="66" cy="54" rx="10" ry="4" transform="rotate(5 66 54)"/></g></svg>
+    <svg class="pop-deco bl" viewBox="0 0 110 90" aria-hidden="true"><path d="M4 90C14 70 22 54 40 40" stroke="#93ab97" stroke-width="2" fill="none"/><g fill="#93ab97"><ellipse cx="12" cy="58" rx="16" ry="5.5" transform="rotate(-70 12 58)"/><ellipse cx="30" cy="62" rx="16" ry="5.5" transform="rotate(-20 30 62)"/><ellipse cx="22" cy="40" rx="15" ry="5" transform="rotate(-80 22 40)"/><ellipse cx="44" cy="46" rx="14" ry="5" transform="rotate(-30 44 46)"/><ellipse cx="38" cy="80" rx="15" ry="5" transform="rotate(10 38 80)"/></g><g fill="#f3a48d"><circle cx="78" cy="60" r="2"/><circle cx="88" cy="56" r="1.7"/><circle cx="84" cy="68" r="2"/><circle cx="96" cy="64" r="1.6"/><circle cx="74" cy="72" r="1.6"/><circle cx="92" cy="76" r="1.8"/></g></svg>
+    <svg class="pop-deco br" viewBox="0 0 130 90" aria-hidden="true"><path d="M60 90c2-20 18-26 34-28 14-2 20-16 36-14v42z" fill="#bcd0ec" opacity=".8"/><path d="M96 90c-6-22 2-50 22-58 6-2 10-2 12-1v59z" fill="#f7c2b0" opacity=".85"/><g fill="#fff"><circle cx="80" cy="72" r="1.8"/><circle cx="90" cy="68" r="1.5"/><circle cx="86" cy="80" r="1.8"/><circle cx="100" cy="76" r="1.5"/></g></svg>
+
+    <div><p class="eyebrow">Piège fréquent</p><h2 id="trap-title">Ne pas confondre limite et BATNA</h2></div>
+    <button type="button" class="pop-close" id="close-trap" aria-label="Fermer la fenêtre Piège fréquent"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+
+    <p class="personal" id="personal"></p>
+
+    <ul class="duo">
+      <li class="concept">
+        <span class="name">Limite</span>
+        <span class="q">Le point où l'on s'arrête</span>
+        <span class="def">Le seuil au-delà duquel on préfère ne pas conclure.</span>
+        <span class="ex">C'est une frontière : elle indique <b>quand</b> dire non.</span>
+      </li>
+      <li class="then" aria-hidden="true">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+        alors
+      </li>
+      <li class="concept">
+        <span class="name">BATNA</span>
+        <span class="q">Ce que l'on fait alors</span>
+        <span class="def">Ce que l'on fait de mieux si aucun accord n'est trouvé (meilleure alternative à une entente négociée).</span>
+        <span class="ex">C'est un plan d'action : il indique <b>quoi faire</b> après ce non.</span>
+      </li>
+    </ul>
+
+    <p class="link">Les deux sont liées : <strong>plus la BATNA est solide, plus la limite est facile à tenir.</strong></p>
+
+    <div class="other">
+      <h3>Autre piège : mettre tous les objectifs au même niveau</h3>
+      <p>L'objectif principal ne se négocie pas en dessous de sa limite. L'objectif secondaire peut être abandonné si le principal est atteint.</p>
+    </div>
+
+    <div class="pop-foot"><button type="button" class="btn primary" id="ok-trap">J'ai compris</button></div>
+  </section>
+</dialog>
+
+<!-- ===== Fenêtre surgissante : À retenir (corrigé 1.2) ===== -->
+<dialog class="trap-dialog retain-dialog" id="retain-dialog" aria-labelledby="retain-title" aria-describedby="retain-text">
+  <section class="pop">
+    <svg class="pop-deco tl" viewBox="0 0 110 80" aria-hidden="true"><path d="M0 0h68c4 10-6 18-16 22-12 5-14 16-26 22C14 50 6 46 0 54z" fill="#bcd0ec" opacity=".75"/><g fill="#8fa7d6"><circle cx="76" cy="12" r="2.2"/><circle cx="86" cy="18" r="1.8"/><circle cx="72" cy="22" r="1.6"/><circle cx="82" cy="28" r="2"/><circle cx="92" cy="10" r="1.5"/></g></svg>
+    <svg class="pop-deco tr" viewBox="0 0 100 90" aria-hidden="true"><path d="M30 0h70v60c-12 4-20-6-26-14-8-10-22-8-30-18C40 20 26 12 30 0z" fill="#f7c2b0" opacity=".8"/><path d="M100 34C84 34 70 40 60 52" stroke="#93ab97" stroke-width="2" fill="none"/><g fill="#93ab97"><ellipse cx="88" cy="26" rx="11" ry="4.5" transform="rotate(-30 88 26)"/><ellipse cx="74" cy="34" rx="11" ry="4.5" transform="rotate(-50 74 34)"/><ellipse cx="80" cy="46" rx="11" ry="4.5" transform="rotate(20 80 46)"/><ellipse cx="66" cy="54" rx="10" ry="4" transform="rotate(5 66 54)"/></g></svg>
+    <svg class="pop-deco bl" viewBox="0 0 110 90" aria-hidden="true"><path d="M4 90C14 70 22 54 40 40" stroke="#93ab97" stroke-width="2" fill="none"/><g fill="#93ab97"><ellipse cx="12" cy="58" rx="16" ry="5.5" transform="rotate(-70 12 58)"/><ellipse cx="30" cy="62" rx="16" ry="5.5" transform="rotate(-20 30 62)"/><ellipse cx="22" cy="40" rx="15" ry="5" transform="rotate(-80 22 40)"/><ellipse cx="44" cy="46" rx="14" ry="5" transform="rotate(-30 44 46)"/><ellipse cx="38" cy="80" rx="15" ry="5" transform="rotate(10 38 80)"/></g><g fill="#f3a48d"><circle cx="78" cy="60" r="2"/><circle cx="88" cy="56" r="1.7"/><circle cx="84" cy="68" r="2"/><circle cx="96" cy="64" r="1.6"/><circle cx="74" cy="72" r="1.6"/><circle cx="92" cy="76" r="1.8"/></g></svg>
+    <svg class="pop-deco br" viewBox="0 0 130 90" aria-hidden="true"><path d="M60 90c2-20 18-26 34-28 14-2 20-16 36-14v42z" fill="#bcd0ec" opacity=".8"/><path d="M96 90c-6-22 2-50 22-58 6-2 10-2 12-1v59z" fill="#f7c2b0" opacity=".85"/><g fill="#fff"><circle cx="80" cy="72" r="1.8"/><circle cx="90" cy="68" r="1.5"/><circle cx="86" cy="80" r="1.8"/><circle cx="100" cy="76" r="1.5"/></g></svg>
+
+    <div><p class="eyebrow">À retenir</p><h2 id="retain-title">Ce qu'est (et n'est pas) une négociation</h2></div>
+    <button type="button" class="pop-close" id="close-retain" aria-label="Fermer la fenêtre À retenir"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+
+    <p class="personal" id="retain-text">On négocie dès qu'on cède quelque chose contre autre chose. Céder sans rien obtenir, ou obtenir en abîmant la relation, ce n'est pas réussir une négociation.</p>
+
+    <div class="pop-foot"><button type="button" class="btn primary" id="ok-retain">J'ai compris</button></div>
+  </section>
+</dialog>
+
+<!-- ===== Visite guidée ===== -->
+<dialog class="tour" id="tour" aria-labelledby="tour-title" aria-describedby="tour-text">
+  <div class="tour-spot" id="tour-spot" aria-hidden="true"></div>
+  <section class="tour-bubble" id="tour-bubble">
+    <svg class="pop-deco tl" viewBox="0 0 110 80" aria-hidden="true"><path d="M0 0h68c4 10-6 18-16 22-12 5-14 16-26 22C14 50 6 46 0 54z" fill="#bcd0ec" opacity=".75"/><g fill="#8fa7d6"><circle cx="76" cy="12" r="2.2"/><circle cx="86" cy="18" r="1.8"/><circle cx="72" cy="22" r="1.6"/><circle cx="82" cy="28" r="2"/></g></svg>
+    <svg class="pop-deco br" viewBox="0 0 130 90" aria-hidden="true"><path d="M60 90c2-20 18-26 34-28 14-2 20-16 36-14v42z" fill="#bcd0ec" opacity=".8"/><path d="M96 90c-6-22 2-50 22-58 6-2 10-2 12-1v59z" fill="#f7c2b0" opacity=".85"/></svg>
+    <p class="tour-step" id="tour-step"></p>
+    <h2 id="tour-title"></h2>
+    <p class="tour-text" id="tour-text"></p>
+    <ol class="tour-dots" id="tour-dots" aria-hidden="true"></ol>
+    <div class="tour-foot">
+      <button type="button" class="tour-skip" id="tour-skip">Passer</button>
+      <button type="button" class="btn" id="tour-prev">Précédent</button>
+      <button type="button" class="btn primary" id="tour-next">Suivant</button>
+    </div>
+  </section>
+</dialog>
+
+<div class="sr-only" role="status" aria-live="polite" id="live"></div>
+<audio id="clic" src="assets/sons/clic-navigation.mp3" preload="auto"></audio>
+
+<script>
+/* ===== Contenu de l'exercice 1.1 ===== */
+const TERMS = [ // [numéro, terme, précision, bonne lettre]
+  [1,"Objectif principal","","c"],
+  [2,"Objectif secondaire","","g"],
+  [3,"Limite","","e"],
+  [4,"Concession acceptable","","h"],
+  [5,"Contrepartie","","d"],
+  [6,"BATNA","Meilleure alternative à une entente négociée","a"],
+  [7,"Besoin réel","","f"],
+  [8,"Hypothèse","","b"]
+];
+const DEFS = {
+  a:"Ce que l'on fait de mieux si aucun accord n'est trouvé.",
+  b:"Ce que l'on suppose de son interlocuteur et qu'il faut vérifier.",
+  c:"Ce que l'on veut absolument obtenir, avec un niveau visé et une limite.",
+  d:"Ce que l'on obtient en échange d'une concession.",
+  e:"Le seuil au-delà duquel on préfère ne pas conclure.",
+  f:"Ce qui motive vraiment la demande du client, au-delà de ce qu'il exprime.",
+  g:"Un gain complémentaire, souhaitable mais pas indispensable.",
+  h:"Ce que l'on a prévu de pouvoir céder."
+};
+
+const $=id=>document.getElementById(id);
+const LETTERS=Object.keys(DEFS), N=TERMS.length;
+let answers={}, sel=null, soundOn=false, corrected=false;
+const roving={term:0,def:0};
+const els={term:[],def:[]};
+
+/* Annonces pour les lecteurs d'écran */
+function say(msg){const l=$("live");l.textContent="";setTimeout(()=>{l.textContent=msg},30)}
+
+/* ===== Son de clic (charte) ===== */
+function setSound(on){
+  soundOn=on;$("sound").setAttribute("aria-pressed",on);
+  $("sound-state").textContent=on?" activés":" coupés";
+  $("sound-waves").setAttribute("d",on?"M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13":"m16 9 5 6m0-6-5 6");
+  try{localStorage.setItem("association-sons",on?"1":"0")}catch(e){}
+}
+document.addEventListener("click",e=>{
+  if(!soundOn||!e.target.closest("button,a[href]"))return;
+  const a=$("clic");try{a.currentTime=0;a.play().catch(()=>{})}catch(err){}
+},true);
+$("sound").addEventListener("click",()=>setSound(!soundOn));
+try{setSound(localStorage.getItem("association-sons")==="1")}catch(e){setSound(false)}
+
+/* ===== Plein écran (avec repli pour les LMS qui l'interdisent) ===== */
+const fsEl=()=>document.fullscreenElement||document.webkitFullscreenElement||null;
+const fsOk=()=>!!(document.fullscreenEnabled||document.webkitFullscreenEnabled);
+function fsSync(){
+  const on=!!fsEl();
+  $("fs-label").textContent=on?"Quitter le plein écran":"Plein écran";
+  $("fs-icon").setAttribute("d",on?"M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5":"M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5");
+}
+function openNewWindow(){
+  // Repli : la page s'ouvre dans un nouvel onglet, réponses conservées
+  const url=location.href.split("#")[0]+"#r="+TERMS.map(t=>answers[t[0]]||"-").join("");
+  const w=window.open(url,"_blank","noopener");
+  say(w?"L'activité s'ouvre dans un nouvel onglet.":"Le plein écran n'est pas autorisé ici et le navigateur bloque l'ouverture d'un nouvel onglet.");
+}
+$("fullscreen").addEventListener("click",()=>{
+  if(fsEl()){(document.exitFullscreen||document.webkitExitFullscreen).call(document);return}
+  if(!fsOk()){openNewWindow();return}
+  const el=document.documentElement,req=el.requestFullscreen||el.webkitRequestFullscreen;
+  try{const p=req.call(el);if(p&&p.catch)p.catch(openNewWindow)}catch(e){openNewWindow()}
+});
+document.addEventListener("fullscreenchange",fsSync);
+document.addEventListener("webkitfullscreenchange",fsSync);
+/* ===== Historique : les réponses sont conservées d'une visite à l'autre ===== */
+const STORE_KEY="association-1-1-reponses";
+function saveHistory(){try{localStorage.setItem(STORE_KEY,JSON.stringify({answers,corrected}))}catch(e){}}
+function clearHistory(){try{localStorage.removeItem(STORE_KEY)}catch(e){}}
+(()=>{try{
+  const d=JSON.parse(localStorage.getItem(STORE_KEY)||"null");if(!d||typeof d.answers!=="object")return;
+  const used=new Set();
+  TERMS.forEach(([n])=>{const l=d.answers[n];if(typeof l==="string"&&DEFS[l]&&!used.has(l)){answers[n]=l;used.add(l)}});
+  corrected=d.corrected===true&&Object.keys(answers).length===N;
+}catch(e){}})();
+// Reprise des réponses transmises par le repli
+(()=>{const m=location.hash.match(/^#r=([a-h-]{8})$/);if(!m)return;answers={};corrected=false;
+  [...m[1]].forEach((l,i)=>{if(l!=="-")answers[TERMS[i][0]]=l});
+  try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}})();
+
+/* ===== Zoom − / + : de 80 % à 150 % (mémorisé) ===== */
+const ZOOMS=[.8,.9,1,1.1,1.25,1.5], ZOOM_DEF=2;
+let zoomI=ZOOM_DEF;
+function setZoom(i,announce){
+  zoomI=Math.min(Math.max(i,0),ZOOMS.length-1);
+  const z=ZOOMS[zoomI],pct=Math.round(z*100)+" %";
+  document.documentElement.style.setProperty("--zoom",z);
+  $("zoom-val").textContent=pct;
+  $("zoom-out").setAttribute("aria-disabled",zoomI===0);
+  $("zoom-in").setAttribute("aria-disabled",zoomI===ZOOMS.length-1);
+  $("zoom-out").setAttribute("aria-label","Réduire le zoom, actuellement "+pct);
+  $("zoom-in").setAttribute("aria-label","Agrandir le zoom, actuellement "+pct);
+  try{localStorage.setItem("association-zoom-niveau",String(z))}catch(e){}
+  if(announce)say("Zoom à "+pct+".");
+}
+function stepZoom(d){
+  const j=zoomI+d;
+  if(j<0||j>=ZOOMS.length){say(d<0?"Zoom minimal atteint : 80 %.":"Zoom maximal atteint : 150 %.");return}
+  setZoom(j,true);
+}
+$("zoom-out").addEventListener("click",()=>stepZoom(-1));
+$("zoom-in").addEventListener("click",()=>stepZoom(1));
+try{const k=ZOOMS.indexOf(Number(localStorage.getItem("association-zoom-niveau")));setZoom(k>-1?k:ZOOM_DEF,false)}catch(e){setZoom(ZOOM_DEF,false)}
+
+/* Jauge du rail */
+function setGauge(p,label){
+  $("percent").textContent=p+" %";$("gauge").style.height=p+"%";
+  $("progress").setAttribute("aria-label",label+" : "+p+" %");
+}
+
+/* ===== Vue exercice : construction unique, puis mises à jour sur place ===== */
+function build(){
+  TERMS.forEach(([n,label,sub])=>els.term.push(mkItem("term",n,String(n),label,sub)));
+  LETTERS.forEach(l=>els.def.push(mkItem("def",l,l+".",DEFS[l],"")));
+  els.term.forEach(b=>{const li=document.createElement("li");li.append(b);$("terms").append(li)});
+  els.def.forEach(b=>{const li=document.createElement("li");li.append(b);$("defs").append(li)});
+}
+function mkItem(kind,id,key,text,sub){
+  const b=document.createElement("button");b.type="button";b.className="item "+kind;
+  b.dataset.kind=kind;b.dataset.id=id;b.dataset.key=key;b.dataset.text=text+(sub?" ("+sub+")":"");
+  b.innerHTML='<span class="key" aria-hidden="true"></span><span class="txt"></span><span class="slot" aria-hidden="true"></span>';
+  b.querySelector(".key").textContent=key;
+  const t=b.querySelector(".txt");t.textContent=text;
+  if(sub){const s=document.createElement("small");s.textContent=sub;t.append(s)}
+  b.addEventListener("click",()=>pick(kind,id));
+  b.addEventListener("keydown",onKey);
+  b.addEventListener("focus",()=>{roving[kind]=els[kind].indexOf(b);syncTabindex()});
+  return b;
+}
+const termOfLetter=l=>{for(const n in answers)if(answers[n]===l)return Number(n);return null};
+function linkOf(kind,id){return kind==="term"?(answers[id]||null):termOfLetter(id)}
+function describe(kind,id){
+  return kind==="term"?"terme "+id+", "+TERMS.find(t=>t[0]===id)[1]:"définition "+id+", "+DEFS[id];
+}
+
+function update(){
+  ["term","def"].forEach(kind=>els[kind].forEach(b=>{
+    const id=kind==="term"?Number(b.dataset.id):b.dataset.id;
+    const link=linkOf(kind,id),selected=!!(sel&&sel.kind===kind&&sel.id===id);
+    b.classList.toggle("paired",!!link);
+    b.querySelector(".slot").textContent=link?String(link):"";
+    b.setAttribute("aria-pressed",selected);
+    let name=b.dataset.key+" "+b.dataset.text;
+    if(link)name+=kind==="term"?", associé à la définition "+link:", associée au terme "+link;
+    else name+=kind==="term"?", non associé":", non associée";
+    b.setAttribute("aria-label",name);
+  }));
+  syncTabindex();
+  const n=Object.keys(answers).length;
+  $("count").textContent=n+(n>1?" termes associés":" terme associé")+" sur "+N;
+  $("check").setAttribute("aria-disabled",n<N?"true":"false");
+  $("check-help").hidden=n>=N;
+  refreshGauge();
+  saveHistory();
+}
+function syncTabindex(){["term","def"].forEach(k=>els[k].forEach((b,i)=>b.tabIndex=i===roving[k]?0:-1))}
+
+function pick(kind,id){
+  const link=linkOf(kind,id);
+  if(link){ // retirer l'association existante
+    const term=kind==="term"?id:link;
+    const letter=answers[term];delete answers[term];sel=null;update();
+    say("Association retirée entre le terme "+term+" et la définition "+letter+".");return;
+  }
+  if(!sel||sel.kind===kind){
+    if(sel&&sel.kind===kind&&sel.id===id){sel=null;update();say("Choix annulé.");return}
+    sel={kind,id};update();
+    say(describe(kind,id)+", choisi. "+(kind==="term"?"Choisir maintenant une définition, avec la flèche droite.":"Choisir maintenant un terme, avec la flèche gauche."));
+    return;
+  }
+  const term=kind==="term"?id:sel.id, letter=kind==="def"?id:sel.id;
+  answers[term]=letter;sel=null;update();
+  const n=Object.keys(answers).length;
+  say("Terme "+term+" associé à la définition "+letter+". "+n+" sur "+N+(n===N?". Tous les termes sont associés : le corrigé est accessible.":"."));
+}
+
+function onKey(e){
+  const b=e.currentTarget,kind=b.dataset.kind,list=els[kind],i=list.indexOf(b);
+  let target=null;
+  switch(e.key){
+    case "ArrowDown":target=list[Math.min(i+1,list.length-1)];break;
+    case "ArrowUp":target=list[Math.max(i-1,0)];break;
+    case "Home":target=list[0];break;
+    case "End":target=list[list.length-1];break;
+    case "ArrowRight":case "ArrowLeft":{
+      const other=kind==="term"?"def":"term";
+      if((e.key==="ArrowRight")!==(kind==="term"))return; // flèche vers l'extérieur : rien
+      const id=kind==="term"?Number(b.dataset.id):b.dataset.id,link=linkOf(kind,id);
+      let j=roving[other];
+      if(link)j=els[other].findIndex(x=>x.dataset.id===String(link));
+      target=els[other][j];break;}
+    case "Escape":if(sel){sel=null;update();say("Choix annulé.");e.preventDefault()}return;
+    default:return;
+  }
+  e.preventDefault();
+  if(target){roving[target.dataset.kind]=els[target.dataset.kind].indexOf(target);syncTabindex();target.focus()}
+}
+
+$("reset").addEventListener("click",()=>{answers={};sel=null;corrected=false;trapSeen=false;readTime=0;markNav();update();say("Réponses effacées.")});
+$("check").addEventListener("click",()=>{
+  if($("check").getAttribute("aria-disabled")==="true"){
+    const r=N-Object.keys(answers).length;
+    say("Il reste "+r+(r>1?" termes":" terme")+" à associer avant le corrigé.");return;
+  }
+  corrected=true;saveHistory();renderCorrection();show("corrige");
+});
+
+/* ===== Vue corrigé ===== */
+function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function renderCorrection(){
+  let good=0;
+  const rows=['<li class="arow head" aria-hidden="true"><span>Terme</span><span>Bonne réponse</span><span>Réponse donnée</span><span>Résultat</span></li>'];
+  TERMS.forEach(([n,label,sub,right])=>{
+    const mine=answers[n],ok=mine===right;if(ok)good++;
+    rows.push('<li class="arow'+((n===3||n===6)?" focus":"")+'">'+
+      '<span class="t">'+n+". "+esc(label)+(sub?"<small>"+esc(sub)+"</small>":"")+"</span>"+
+      '<span class="r"><span class="sr-only">Bonne réponse : </span><span class="letter good">'+right+"</span><span>"+esc(DEFS[right])+"</span></span>"+
+      '<span class="mine '+(ok?"ok":"ko")+'"><span class="lbl" aria-hidden="true">Réponse donnée</span><span class="sr-only">Réponse donnée : </span><span class="letter">'+(mine||"–")+"</span></span>"+
+      '<span class="verdict '+(ok?"ok":"ko")+'">'+(ok?"✓ Juste":"✗ À revoir")+"</span></li>");
+  });
+  $("answers").innerHTML=rows.join("");
+  $("score").innerHTML=good+'<span> / '+N+'</span><span class="sr-only"> réponses justes</span>';
+  $("score-msg").textContent=good===N?"Toutes les associations sont justes."
+    :good>=6?"Presque : les lignes « À revoir » signalent les associations à reprendre."
+    :"Les lignes « À revoir » et le piège fréquent ci-dessous aident à reprendre l'exercice.";
+
+  const l=answers[3],b=answers[6];let msg;
+  if(l==="a"&&b==="e")msg="Limite et BATNA sont inversées dans les réponses : c'est précisément le piège le plus fréquent.";
+  else if(l==="a")msg="La limite a reçu la définition de la BATNA. Or la limite indique où l'on s'arrête, pas ce que l'on fait ensuite.";
+  else if(b==="e")msg="La BATNA a reçu la définition de la limite. Or la BATNA n'est pas un seuil : c'est le plan prévu si aucun accord n'est trouvé.";
+  else if(l==="e"&&b==="a")msg="Limite et BATNA sont bien distinguées. Reste à retenir comment les deux se complètent.";
+  else msg="Limite et BATNA ne sont pas toutes les deux justes dans les réponses. Voici ce qui les distingue.";
+  $("personal").textContent=msg;
+
+  refreshGauge();
+  markNav(good===N);
+}
+
+/* Fenêtre surgissante « Piège fréquent » (dialog natif : focus piégé, Échap ferme) */
+const trapDlg=$("trap-dialog");
+// La fenêtre « Piège fréquent » s'ouvre automatiquement à l'arrivée sur le corrigé 1.1 (une fois par passage), puis reste accessible par le bouton
+let trapSeen=false, readTime=0;
+function openTrap(auto){
+  if(trapDlg.open)return;
+  trapSeen=true;
+  const m=$("menu");if(m.classList.contains("is-open"))m.querySelector(".av-menu-close").click();
+  if(typeof trapDlg.showModal==="function")trapDlg.showModal();else trapDlg.setAttribute("open","");
+  $("close-trap").focus();
+  if(auto)say("La fenêtre Piège fréquent s'ouvre automatiquement.");
+}
+$("open-trap").addEventListener("click",()=>openTrap(false));
+function closeTrap(){if(trapDlg.open){if(trapDlg.close)trapDlg.close();else trapDlg.removeAttribute("open")}}
+$("close-trap").addEventListener("click",closeTrap);
+$("ok-trap").addEventListener("click",closeTrap);
+trapDlg.addEventListener("click",e=>{if(e.target===trapDlg)closeTrap()}); // clic sur le fond
+trapDlg.addEventListener("close",()=>$("open-trap").focus());
+
+$("back").addEventListener("click",()=>show("exercice"));
+$("retry").addEventListener("click",()=>{clearHistory();answers={};sel=null;corrected=false;trapSeen=false;readTime=0;markNav();update();show("exercice")});
+
+$("to-ex2").addEventListener("click",()=>show("exercice2"));
+
+/* ===== Exercice 1.2 : sept situations, quatre catégories ===== */
+const CATS={A:"Défense du prix",B:"Négociation",C:"Concession à fond perdu",D:"Accord qui abîme la relation"};
+const SITS=[ // [situation, bonne catégorie, pourquoi (corrigé du formateur)]
+  ["« C'est cher. » Léa, vendeuse dans un magasin de literie, prend le temps de détailler tout ce que comprend le prix : une garantie de 5 ans, la livraison et la reprise de l'ancien matelas. Elle maintient son tarif.","A",
+   "Léa valorise ce que comprend le prix, sans rien céder."],
+  ["L'acheteur d'une petite entreprise demande 8 % de remise. Le commercial répond : « 4 %, si vous vous engagez sur 12 mois de commandes. »","B",
+   "La remise est échangée contre un engagement : une concession, une contrepartie."],
+  ["Un client hésite à signer son bon de commande. Pour ne pas perdre la vente, Malik lui accorde aussitôt 10 % de remise.","C",
+   "Une concession immédiate, rien en échange : le client apprend qu'il suffit d'hésiter."],
+  ["Une propriétaire veut baisser les honoraires de l'agence. L'agent accepte 4,5 % au lieu de 5 %, contre un mandat exclusif de 3 mois.","B",
+   "L'agent cède sur les honoraires et obtient l'exclusivité."],
+  ["Un client trouve la voiture un peu chère. Le conseiller lui rappelle que le prix comprend l'entretien de la première année ainsi qu'un véhicule de prêt.","A",
+   "Le conseiller rappelle la valeur ; rien n'est cédé."],
+  ["« Bon, je vous offre la livraison, ça vous va ? », sans rien demander en retour.","C",
+   "Piège fréquent : un geste commercial n'est pas une négociation s'il ne rapporte rien."],
+  ["Thomas obtient qu'un client renonce à toute remise en menaçant de suspendre ses livraisons sous 48 h. Le client signe, puis ne renouvelle pas son contrat l'année suivante.","D",
+   "L'objectif est atteint par la contrainte, mais le client est perdu à l'échéance suivante. Le cours le rappelle : pas de négociation sans relation, et une issue positive pour chacun."]
+];
+const N2=SITS.length, S2_KEY="association-1-2-reponses-v3";
+let ans2={}, draft2={}, cur2=0, done2=false; // draft2 : choix non encore validés (gardés en changeant de proposition)
+const catBtns={}, dotBtns=[];
+const nAns2=()=>Object.keys(ans2).length;
+
+/* Historique : réponses conservées, sauf « Refaire l'exercice » */
+function save2(){try{localStorage.setItem(S2_KEY,JSON.stringify({ans2,cur2,done2}))}catch(e){}}
+(()=>{try{
+  const d=JSON.parse(localStorage.getItem(S2_KEY)||"null");if(!d)return;
+  for(let i=0;i<N2;i++)if(d.ans2&&CATS[d.ans2[i]])ans2[i]=d.ans2[i];
+  cur2=Number.isInteger(d.cur2)&&d.cur2>=0&&d.cur2<N2?d.cur2:0;
+  done2=d.done2===true&&nAns2()===N2;
+}catch(e){}})();
+
+function refreshGauge(){
+  const p1=Object.keys(answers).length/N, p2=nAns2()/N2;
+  setGauge(Math.round((p1+p2)/2*100),"Progression de l'activité");
+}
+function build2(){
+  Object.keys(CATS).forEach(L=>{
+    const li=document.createElement("li"),b=document.createElement("button");
+    b.type="button";b.className="cat";b.dataset.cat=L;
+    b.innerHTML='<span class="cat-l" aria-hidden="true">'+L+'</span><span>'+esc(CATS[L])+'</span><span class="cat-mark" aria-hidden="true">✓</span>';
+    b.addEventListener("click",()=>pickCat(L));
+    catBtns[L]=b;li.append(b);$("cats").append(li);
+  });
+  SITS.forEach((s,i)=>{
+    const li=document.createElement("li"),b=document.createElement("button");
+    b.type="button";b.className="dot";b.innerHTML=(i+1)+'<span class="dot-mark" aria-hidden="true"></span>';
+    b.addEventListener("click",()=>goTo2(i));
+    dotBtns.push(b);li.append(b);$("dots").append(li);
+  });
+}
+function render2(){
+  const saved=ans2[cur2], draft=draft2[cur2], shown=draft||saved, n=nAns2();
+  $("chip").textContent="Proposition "+(cur2+1)+" sur "+N2;
+  $("prop-text").innerHTML="<b>"+(cur2+1)+".</b> "+esc(SITS[cur2][0]);
+  $("cats").setAttribute("aria-label","Catégorie de la proposition "+(cur2+1)+", un seul choix possible");
+  $("cats").classList.toggle("has-choice",!!shown);
+  Object.keys(CATS).forEach(L=>{
+    const b=catBtns[L];
+    b.setAttribute("aria-pressed",shown===L);
+    b.setAttribute("aria-label",L+", "+CATS[L]+(saved===L?", réponse validée":(draft===L?", choisie, à valider":"")));
+  });
+  $("prev2").setAttribute("aria-disabled",cur2===0);
+  $("next2").setAttribute("aria-disabled",cur2===N2-1);
+  dotBtns.forEach((b,i)=>{
+    const a=ans2[i];
+    b.classList.toggle("chosen",!!a);
+    if(a)b.dataset.cat=a;else delete b.dataset.cat;
+    b.querySelector(".dot-mark").textContent=a||"";
+    if(i===cur2)b.setAttribute("aria-current","step");else b.removeAttribute("aria-current");
+    b.setAttribute("aria-label","Proposition "+(i+1)+(a?", réponse validée : "+a+", "+CATS[a]:", à faire"));
+  });
+  // « Valider » n'est actif que s'il y a un choix nouveau à enregistrer
+  $("validate2").setAttribute("aria-disabled",!(draft&&draft!==saved));
+  $("count2").textContent=n+(n>1?" propositions validées":" proposition validée")+" sur "+N2+(n<N2?" · le corrigé s'ouvre quand les 7 sont validées":"");
+  $("check2").setAttribute("aria-disabled",n<N2?"true":"false");
+  $("check2").classList.toggle("primary",n===N2);
+  refreshGauge();markNav2();save2();
+}
+function pickCat(L){
+  const prev=draft2[cur2]||ans2[cur2];
+  draft2[cur2]=L;render2();
+  say(L+", "+CATS[L]+", choisie"+(prev&&prev!==L?" à la place de "+prev:"")+". Validez votre réponse pour l'enregistrer.");
+}
+function goTo2(i){
+  if(i<0||i>=N2)return;
+  cur2=i;render2();
+  const pb=$("prop-body");pb.removeAttribute("data-anim");void pb.offsetWidth;pb.setAttribute("data-anim","");
+  say("Proposition "+(i+1)+" sur "+N2+". "+SITS[i][0]+(ans2[i]?" Réponse validée : "+ans2[i]+", "+CATS[ans2[i]]+".":""));
+}
+$("prev2").addEventListener("click",()=>{if(cur2>0)goTo2(cur2-1);else say("C'est la première proposition.")});
+$("next2").addEventListener("click",()=>{if(cur2<N2-1)goTo2(cur2+1);else say("C'est la dernière proposition.")});
+$("validate2").addEventListener("click",()=>{
+  const L=draft2[cur2];
+  if(!L||L===ans2[cur2]){say(ans2[cur2]?"Cette réponse est déjà validée. Choisissez une autre catégorie pour la modifier.":"Choisissez d'abord une catégorie.");return}
+  ans2[cur2]=L;delete draft2[cur2];
+  const n=nAns2(),msg="Réponse "+L+" validée pour la proposition "+(cur2+1)+". "+n+" sur "+N2+".";
+  if(cur2<N2-1){goTo2(cur2+1);say(msg+" Proposition "+(cur2+1)+" : "+SITS[cur2][0])}
+  else{
+    const j=SITS.findIndex((s,i)=>!ans2[i]);
+    if(j>-1){goTo2(j);say(msg+" Il reste des propositions à faire. Proposition "+(j+1)+" : "+SITS[j][0])}
+    else{render2();say(msg+" Toutes les propositions sont validées : le corrigé est accessible.");$("check2").focus()}
+  }
+});
+$("check2").addEventListener("click",()=>{
+  const r=N2-nAns2();
+  if(r>0){
+    say("Il reste "+r+(r>1?" propositions":" proposition")+" à valider avant le corrigé.");
+    const j=SITS.findIndex((s,i)=>!ans2[i]);if(j>-1)goTo2(j);
+    return;
+  }
+  done2=true;retainSeen=false;save2();renderBilan();show("corrige2");
+});
+// Raccourcis : A à D pour choisir, flèches pour changer de situation
+$("exercice2").addEventListener("keydown",e=>{
+  if(e.altKey||e.ctrlKey||e.metaKey)return;
+  const k=e.key.length===1?e.key.toUpperCase():"";
+  if(CATS[k]){e.preventDefault();pickCat(k);catBtns[k].focus();return}
+  if(e.key==="ArrowLeft"&&cur2>0){e.preventDefault();goTo2(cur2-1)}
+  if(e.key==="ArrowRight"&&cur2<N2-1){e.preventDefault();goTo2(cur2+1)}
+});
+
+/* Corrigé 1.2 : réponses de l'apprenant face au corrigé */
+let rev=0;
+const revDots=[];
+const catTag=(L,cls)=>L?'<span class="'+(cls||"pill")+'" data-cat="'+L+'"><span class="cl">'+L+'</span><span class="cl-name">'+esc(CATS[L])+'</span></span>':'<span class="pill"><span class="cl">–</span><span class="cl-name">Aucune</span></span>';
+function renderBilan(){
+  let good=0;
+  $("recap-body").innerHTML=SITS.map(([text,right],i)=>{
+    const mine=ans2[i],ok=mine===right;if(ok)good++;
+    return '<tr id="recap-row-'+i+'"><th scope="row"><button type="button" class="row-go" data-i="'+i+'">Proposition '+(i+1)+'</button></th>'+
+      '<td>'+catTag(mine)+'</td><td>'+catTag(right)+'</td>'+
+      '<td class="verdict '+(ok?"ok":"ko")+'">'+(ok?"✓ Juste":"✗ Incorrect")+'</td></tr>';
+  }).join("");
+  $("recap-body").querySelectorAll(".row-go").forEach(b=>b.addEventListener("click",()=>{
+    goRev(Number(b.dataset.i));$("review").scrollIntoView({block:"start",behavior:"smooth"});$("rev-chip").focus({preventScroll:true});
+  }));
+  if(!revDots.length)SITS.forEach((s,i)=>{
+    const li=document.createElement("li"),b=document.createElement("button");
+    b.type="button";b.className="dot";b.innerHTML=(i+1)+'<span class="dot-mark" aria-hidden="true"></span>';
+    b.addEventListener("click",()=>goRev(i));
+    revDots.push(b);li.append(b);$("rev-dots").append(li);
+  });
+  $("score2").innerHTML=good+'<span> / '+N2+'</span><span class="sr-only"> réponses justes</span>';
+  $("score2-msg").textContent=good===N2?"Toutes les propositions sont bien classées."
+    :good>=5?"Presque : passez en revue les propositions marquées ✗ pour voir ce qui distingue les catégories."
+    :"Passez en revue les propositions marquées ✗, puis relisez le point « À retenir ».";
+  rev=0;renderReview();
+  markNav2();
+}
+function renderReview(){
+  const [text,right,why]=SITS[rev],mine=ans2[rev],ok=mine===right;
+  $("rev-chip").textContent="Proposition "+(rev+1)+" sur "+N2;
+  $("rev-text").innerHTML="<b>"+(rev+1)+".</b> "+esc(text);
+  $("rev-mine").className="rev-panel "+(ok?"is-ok":"is-ko");
+  $("rev-mine-cat").innerHTML=catTag(mine,"rev-tag");
+  $("rev-right-cat").innerHTML=catTag(right,"rev-tag");
+  $("rev-verdict").innerHTML='<b class="rev-note-title verdict '+(ok?"ok":"ko")+'">'+(ok?"✓ Juste":"✗ Incorrect")+'</b><span>'+
+    (ok?"Votre réponse correspond au corrigé.":"Vous avez classé cette proposition en "+(mine?mine+" · "+esc(CATS[mine]):"–")+", la bonne catégorie est "+right+" · "+esc(CATS[right])+".")+'</span>';
+  $("rev-just").textContent=why;
+  $("prev3").setAttribute("aria-disabled",rev===0);
+  $("next3").setAttribute("aria-disabled",rev===N2-1);
+  revDots.forEach((b,i)=>{
+    const o=ans2[i]===SITS[i][1];
+    b.classList.toggle("ok",o);b.classList.toggle("ko",!o);
+    b.querySelector(".dot-mark").textContent=o?"✓":"✗";
+    if(i===rev)b.setAttribute("aria-current","step");else b.removeAttribute("aria-current");
+    b.setAttribute("aria-label","Proposition "+(i+1)+(o?", juste":", incorrecte"));
+  });
+  SITS.forEach((s,i)=>{const r=$("recap-row-"+i);if(r)r.classList.toggle("cur",i===rev)});
+}
+function goRev(i){
+  if(i<0||i>=N2)return;
+  rev=i;renderReview();
+  const pb=$("rev-body");pb.removeAttribute("data-anim");void pb.offsetWidth;pb.setAttribute("data-anim","");
+  const ok=ans2[i]===SITS[i][1];
+  say("Proposition "+(i+1)+" sur "+N2+". "+(ok?"Juste.":"Incorrect. Bonne réponse : "+SITS[i][1]+", "+CATS[SITS[i][1]]+".")+" Justification : "+SITS[i][2]);
+}
+$("prev3").addEventListener("click",()=>{if(rev>0)goRev(rev-1);else say("C'est la première proposition.")});
+$("next3").addEventListener("click",()=>{if(rev<N2-1)goRev(rev+1);else say("C'est la dernière proposition.")});
+$("corrige2").addEventListener("keydown",e=>{
+  if(e.altKey||e.ctrlKey||e.metaKey||e.target.closest("table"))return;
+  if(e.key==="ArrowLeft"&&rev>0){e.preventDefault();goRev(rev-1)}
+  if(e.key==="ArrowRight"&&rev<N2-1){e.preventDefault();goRev(rev+1)}
+});
+$("back2").addEventListener("click",()=>show("exercice2"));
+$("to-ex1").addEventListener("click",()=>show("exercice"));
+$("reset2").addEventListener("click",()=>{ans2={};draft2={};cur2=0;done2=false;retainSeen=false;save2();render2();say("Toutes vos réponses à l'exercice 1.2 sont effacées.")});
+$("retry2").addEventListener("click",()=>{ans2={};draft2={};cur2=0;done2=false;retainSeen=false;save2();show("exercice2");say("Exercice 1.2 remis à zéro.")});
+/* Fenêtre « À retenir » du corrigé 1.2 : ouverture automatique une fois le tableau récapitulatif atteint, puis bouton pour la rouvrir */
+const retainDlg=$("retain-dialog");
+let retainSeen=false, retainTimer=null;
+function openRetain(auto){
+  if(retainDlg.open||tour.open)return;
+  retainSeen=true;clearTimeout(retainTimer);
+  const m=$("menu");if(m.classList.contains("is-open"))m.querySelector(".av-menu-close").click();
+  if(typeof retainDlg.showModal==="function")retainDlg.showModal();else retainDlg.setAttribute("open","");
+  $("close-retain").focus();
+  if(auto)say("La fenêtre À retenir s'ouvre automatiquement.");
+}
+function closeRetain(){if(retainDlg.open){if(retainDlg.close)retainDlg.close();else retainDlg.removeAttribute("open")}}
+$("open-retain").addEventListener("click",()=>openRetain(false));
+$("close-retain").addEventListener("click",closeRetain);
+$("ok-retain").addEventListener("click",closeRetain);
+retainDlg.addEventListener("click",e=>{if(e.target===retainDlg)closeRetain()});
+retainDlg.addEventListener("close",()=>$("open-retain").focus());
+// Le bas du tableau récapitulatif doit être visible et le défilement arrêté (0,7 s) pour déclencher l'ouverture
+if("IntersectionObserver" in window){
+  new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      clearTimeout(retainTimer);
+      if(en.isIntersecting&&!retainSeen&&curView==="corrige2")retainTimer=setTimeout(()=>{if(curView==="corrige2"&&!retainSeen)openRetain(true)},700);
+    });
+  },{threshold:1}).observe($("recap-end"));
+}
+
+// Synthèse : disponible une fois les deux corrigés consultés
+const synOpen=()=>corrected&&done2;
+function markRet(){
+  const ok=synOpen();
+  $("nav-ret").setAttribute("aria-disabled",ok?"false":"true");
+  $("nav-ret").classList.toggle("is-done",ok&&retSeen);
+  $("nav-ret-state").textContent=ok?(retSeen?", consultée":", disponible"):", accessible après les deux corrigés";
+  $("to-ret").hidden=!ok;
+  if(!ok&&curView==="retenir")show("accueil");
+}
+var retSeen=false;
+try{retSeen=localStorage.getItem("association-synthese-vue")==="1"}catch(e){}
+$("ret-co1").addEventListener("click",()=>show("corrige"));
+$("ret-co2").addEventListener("click",()=>show("corrige2"));
+$("ret-home").addEventListener("click",()=>show("accueil"));
+$("to-ret").addEventListener("click",()=>show("retenir"));
+function markNav2(){
+  let good=0;for(let i=0;i<N2;i++)if(ans2[i]===SITS[i][1])good++;
+  $("nav-ex2").classList.toggle("is-done",done2);
+  $("nav-ex2-state").textContent=done2?", terminé":", à faire";
+  $("nav-co2").classList.toggle("is-done",done2); // corrigé consulté = coché
+  $("nav-co2").setAttribute("aria-disabled",done2?"false":"true");
+  $("nav-co2-state").textContent=done2?(good===N2?", consulté, tout est juste":", consulté"):", accessible après l'exercice";
+  if(typeof markRet==="function")markRet();
+}
+
+/* ===== Navigation entre les quatre vues ===== */
+const VIEWS={
+  accueil:{h:"h-home",nav:null,crumb:"· Accueil",title:"Accueil"},
+  exercice:{h:"h-ex",nav:"nav-ex",crumb:"· 1.1 Les mots du cours",title:"1.1 Les mots du cours"},
+  corrige:{h:"h-co",nav:"nav-co",crumb:"· Corrigé 1.1 Les mots du cours",title:"Corrigé 1.1"},
+  exercice2:{h:"h-ex2",nav:"nav-ex2",crumb:"· 1.2 Sept situations, quatre catégories",title:"1.2 Sept situations, quatre catégories"},
+  corrige2:{h:"h-co2",nav:"nav-co2",crumb:"· Corrigé 1.2 Sept situations, quatre catégories",title:"Corrigé 1.2"},
+  retenir:{h:"h-ret",nav:"nav-ret",crumb:"· À retenir",title:"À retenir"}
+};
+let curView="exercice";
+function show(view,noFocus){
+  curView=view;
+  Object.keys(VIEWS).forEach(k=>{
+    $(k).hidden=k!==view;
+    if(!VIEWS[k].nav)return;
+    const a=$(VIEWS[k].nav);a.classList.toggle("active",k===view);
+    if(k===view)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");
+  });
+  document.body.classList.toggle("is-home",view==="accueil");
+  const home=$("home");if(view==="accueil")home.setAttribute("aria-current","page");else home.removeAttribute("aria-current");
+  $("crumb-step").textContent=VIEWS[view].crumb;
+  document.title="Négocier ou défendre · "+VIEWS[view].title;
+  if(view==="exercice")update();
+  if(view==="exercice2")render2();
+  window.scrollTo({top:0});
+  if(!noFocus)$(VIEWS[view].h).focus();
+  if(view==="retenir"){retSeen=true;try{localStorage.setItem("association-synthese-vue","1")}catch(e){}markRet()}
+  if(view==="exercice")maybeTour1();
+  if(view==="exercice2")maybeTour2();
+  if(view==="corrige"&&!trapSeen)setTimeout(()=>{if(curView==="corrige"&&!tour.open)openTrap(true)},500);
+}
+function markNav(allGood){
+  $("nav-ex").classList.toggle("is-done",corrected);
+  $("nav-ex-state").textContent=corrected?", terminé":", à faire";
+  $("nav-co").classList.toggle("is-done",corrected); // corrigé consulté = coché
+  $("nav-co").setAttribute("aria-disabled",corrected?"false":"true");
+  $("nav-co-state").textContent=corrected?(allGood?", consulté, tout est juste":", consulté"):", accessible après l'exercice";
+  if(typeof markRet==="function")markRet();
+}
+
+/* ===== Panneau de gauche : comportement de la charte + piège du focus ===== */
+(()=>{
+  const menu=$("menu"),toggle=menu.querySelector(".av-menu-toggle"),panel=$("menu-panel");
+  const links=()=>[...panel.querySelectorAll(".av-menu-list a")];
+  const set=(open,focus=true)=>{
+    menu.classList.toggle("is-open",open);
+    toggle.setAttribute("aria-expanded",open);
+    toggle.setAttribute("aria-label",open?"Fermer le menu":"Ouvrir le menu");
+    if(open){panel.removeAttribute("inert");if(focus)panel.querySelector(".av-menu-list a.active").focus()}
+    else{panel.setAttribute("inert","");if(focus)toggle.focus()}
+  };
+  toggle.addEventListener("click",()=>set(!menu.classList.contains("is-open")));
+  menu.querySelector(".av-menu-close").addEventListener("click",()=>set(false));
+  menu.querySelector(".av-menu-backdrop").addEventListener("click",()=>set(false,false));
+  $("nav-ex").addEventListener("click",e=>{e.preventDefault();set(false,false);show("exercice")});
+  $("nav-co").addEventListener("click",e=>{e.preventDefault();if(!corrected){say("Le corrigé est accessible une fois les 8 termes associés.");return}set(false,false);show("corrige")});
+  $("nav-ex2").addEventListener("click",e=>{e.preventDefault();set(false,false);show("exercice2")});
+  $("nav-co2").addEventListener("click",e=>{e.preventDefault();if(!done2){say("Le corrigé est accessible une fois les 7 situations classées.");return}set(false,false);show("corrige2")});
+  $("nav-ret").addEventListener("click",e=>{e.preventDefault();if(!synOpen()){say("La synthèse est accessible une fois les deux corrigés consultés.");return}set(false,false);show("retenir")});
+  panel.addEventListener("keydown",e=>{
+    const L=links(),i=L.indexOf(document.activeElement);
+    if((e.key==="ArrowDown"||e.key==="ArrowUp")&&i>-1){e.preventDefault();L[(i+(e.key==="ArrowDown"?1:L.length-1))%L.length].focus()}
+    if(e.key==="Tab"){ // le focus reste dans le volet ouvert
+      const f=[toggle,...L,menu.querySelector(".av-menu-close")],k=f.indexOf(document.activeElement);
+      e.preventDefault();f[(k+(e.shiftKey?f.length-1:1))%f.length].focus();
+    }
+  });
+  toggle.addEventListener("keydown",e=>{
+    if(e.key==="Tab"&&menu.classList.contains("is-open")){e.preventDefault();(e.shiftKey?menu.querySelector(".av-menu-close"):links()[0]).focus()}
+  });
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&menu.classList.contains("is-open"))set(false)});
+  const home=$("home");
+  // Bouton maison : page de garde de l'activité
+  home.addEventListener("click",e=>{e.preventDefault();set(false,false);show("accueil")});
+})();
+
+/* ===== Visite guidée (lancée automatiquement à la première visite, « Passer » pour l'ignorer) ===== */
+const TOUR_KEY="association-1-1-visite", TOUR2_KEY="association-1-2-visite";
+const TOUR0_KEY="association-accueil-visite";
+const TOUR0=[
+  {sel:null,title:"Bienvenue",text:"Cette courte visite présente l'activité « Négocier ou défendre ». Le bouton « Passer » permet de l'ignorer à tout moment."},
+  {sel:".home-head",title:"L'activité",text:"L'activité dure environ 15 minutes et vous aide à adopter le bon vocabulaire de la négociation."},
+  {sel:".home-cards",title:"Deux exercices",text:"Commencez par l'exercice 1, puis passez à l'exercice 2. Chaque exercice est suivi de son corrigé. Une courte visite vous guidera à la première ouverture de chacun."},
+  {sel:".tools",title:"Les outils",text:"Relancez cette visite, agrandissez ou réduisez le contenu avec le zoom, passez en plein écran ou activez les sons quand vous le souhaitez."},
+  {sel:".av-menu-rail",title:"Menu, accueil et progression",text:"Le menu donne accès aux exercices et à leurs corrigés, la maison ramène à cette page, et la jauge montre votre progression. Vos réponses sont conservées si vous quittez l'activité."}
+];
+const TOUR1=[
+  {sel:null,title:"Bienvenue dans l'exercice",text:"Cette courte visite présente la page en quelques étapes. Le bouton « Passer » permet de l'ignorer à tout moment."},
+  {sel:".hero-txt",title:"La consigne",text:"Ici se trouvent la consigne, la durée prévue et ce que l'activité permet de travailler."},
+  {sel:"#terms",title:"1. Choisir un terme",text:"Commencez par cliquer sur un terme de la colonne de gauche : il est alors mis en évidence."},
+  {sel:"#defs",title:"2. Choisir sa définition",text:"Cliquez ensuite sur la définition qui correspond. Le numéro du terme s'affiche à droite de la définition. Cliquer sur un élément déjà associé retire l'association."},
+  {sel:".bar",title:"Suivre l'avancement",text:"Le compteur indique le nombre de termes associés. « Effacer les réponses » vide toutes les associations."},
+  {sel:"#kbd-help",title:"Au clavier",text:"Tout l'exercice peut se faire au clavier, avec les flèches, Entrée ou Espace, et Échap."},
+  {sel:".card-foot",title:"Voir le corrigé",text:"Une fois les 8 termes associés, ce bouton ouvre le corrigé et un point sur le piège fréquent."},
+  {sel:".tools",title:"Les outils",text:"Agrandissez ou réduisez le contenu avec les boutons + et − du zoom, passez en plein écran, activez les sons ou relancez cette visite quand vous le souhaitez."},
+  {sel:".av-menu-rail",title:"Menu et progression",text:"L'activité comporte deux exercices. Le menu donne accès à chacun et à son corrigé ; la jauge montre la progression sur l'ensemble. Vos réponses sont conservées si vous quittez la page."}
+];
+const TOUR2=[
+  {sel:null,title:"Exercice 1.2",text:"Une courte visite présente le fonctionnement de ce deuxième exercice. Le bouton « Passer » permet de l'ignorer."},
+  {sel:"#prop-card",title:"La proposition",text:"Lisez la proposition. Les flèches permettent de passer d'une proposition à l'autre."},
+  {sel:"#cats",title:"Les quatre catégories",text:"Cliquez sur la catégorie qui correspond à la proposition. Au clavier, les touches A, B, C et D font la même chose."},
+  {sel:"#validate2",title:"Valider",text:"« Valider ma réponse » enregistre votre choix et affiche directement la proposition suivante."},
+  {sel:"#dots",title:"Revenir sur une proposition",text:"Chaque pastille affiche la lettre validée. Cliquez sur une pastille, ou utilisez les flèches, pour revenir à tout moment sur une proposition et modifier votre réponse."},
+  {sel:"#ex2-end",title:"Voir le corrigé",text:"Une fois les 7 propositions validées, ce bouton ouvre le corrigé avec vos réponses, la bonne catégorie et pourquoi."}
+];
+let TOUR=TOUR1, tourKey=TOUR_KEY;
+const tour=$("tour"),spot=$("tour-spot"),bubble=$("tour-bubble");
+let tourI=0;
+
+function tourTarget(){
+  const s=TOUR[tourI].sel;if(!s)return null;
+  const el=document.querySelector(s);
+  return el&&el.getClientRects().length?el:null;
+}
+function placeTour(){
+  if(!tour.open)return;
+  const el=tourTarget(),vw=innerWidth,vh=innerHeight,m=16,pad=8;
+  const bw=bubble.offsetWidth,bh=bubble.offsetHeight;
+  let left,top;
+  if(!el){
+    spot.classList.remove("has-target");
+    Object.assign(spot.style,{left:vw/2+"px",top:vh/2+"px",width:"0px",height:"0px"});
+    left=(vw-bw)/2;top=(vh-bh)/2;
+  }else{
+    const r=el.getBoundingClientRect();
+    const x=Math.max(r.left-pad,4),y=Math.max(r.top-pad,4);
+    const w=Math.min(r.right+pad,vw-4)-x,h=Math.min(r.bottom+pad,vh-4)-y;
+    spot.classList.add("has-target");
+    Object.assign(spot.style,{left:x+"px",top:y+"px",width:w+"px",height:h+"px"});
+    if(vw<=720){left=(vw-bw)/2;top=(y+h/2<vh/2)?vh-bh-m:m}       // téléphone : en haut ou en bas
+    else if(y+h+m+bh<=vh){top=y+h+m;left=x}                        // dessous
+    else if(y-m-bh>=0){top=y-m-bh;left=x}                           // dessus
+    else if(x+w+m+bw<=vw){left=x+w+m;top=y}                         // à droite
+    else if(x-m-bw>=0){left=x-m-bw;top=y}                           // à gauche
+    else{left=(vw-bw)/2;top=vh-bh-m}
+  }
+  bubble.style.left=Math.round(Math.min(Math.max(left,m),vw-bw-m))+"px";
+  bubble.style.top=Math.round(Math.min(Math.max(top,m),vh-bh-m))+"px";
+}
+function renderTour(){
+  const st=TOUR[tourI],last=tourI===TOUR.length-1;
+  $("tour-step").textContent="Visite guidée · étape "+(tourI+1)+" sur "+TOUR.length;
+  $("tour-title").textContent=st.title;
+  $("tour-text").textContent=st.text;
+  [...$("tour-dots").children].forEach((d,i)=>d.classList.toggle("on",i===tourI));
+  $("tour-prev").hidden=tourI===0;
+  $("tour-next").textContent=last?"C'est parti":"Suivant";
+  $("tour-skip").hidden=last;
+  bubble.removeAttribute("data-anim");void bubble.offsetWidth;bubble.setAttribute("data-anim","");
+  const el=tourTarget();
+  if(el){const r=el.getBoundingClientRect();if(r.top<70||r.bottom>innerHeight-20)el.scrollIntoView({block:"center"})}
+  requestAnimationFrame(placeTour);
+  $("tour-next").focus();
+}
+function startTour(which){
+  if(tour.open)return;
+  closeTrap();
+  const m=$("menu");if(m.classList.contains("is-open"))m.querySelector(".av-menu-close").click();
+  // Visite de l'exercice en cours : 1.2 si l'apprenant est dans l'exercice 1.2 ou son bilan, sinon 1.1
+  const zero=which===0||(typeof which!=="number"&&curView==="accueil");
+  const two=!zero&&(which===2||(which!==1&&(curView==="exercice2"||curView==="corrige2")));
+  TOUR=zero?TOUR0:two?TOUR2:TOUR1;tourKey=zero?TOUR0_KEY:two?TOUR2_KEY:TOUR_KEY;
+  const target=zero?"accueil":two?"exercice2":"exercice";
+  if(curView!==target)show(target);
+  $("tour-dots").innerHTML="";TOUR.forEach(()=>$("tour-dots").append(document.createElement("li")));
+  tourI=0;
+  if(typeof tour.showModal==="function")tour.showModal();else tour.setAttribute("open","");
+  renderTour();
+}
+function endTour(skipped){
+  try{localStorage.setItem(tourKey,"1")}catch(e){}
+  if(tour.open){if(tour.close)tour.close();else tour.removeAttribute("open")}
+  say(skipped?"Visite guidée passée.":"Visite guidée terminée.");
+  $(VIEWS[curView].h).focus();
+}
+function maybeTour1(){try{if(localStorage.getItem(TOUR_KEY)!=="1")setTimeout(()=>startTour(1),400)}catch(e){}}
+function maybeTour2(){try{if(localStorage.getItem(TOUR2_KEY)!=="1")setTimeout(()=>startTour(2),400)}catch(e){}}
+$("tour-next").addEventListener("click",()=>{if(tourI===TOUR.length-1)endTour(false);else{tourI++;renderTour()}});
+$("tour-prev").addEventListener("click",()=>{if(tourI>0){tourI--;renderTour()}});
+$("tour-skip").addEventListener("click",()=>endTour(true));
+tour.addEventListener("cancel",e=>{e.preventDefault();endTour(true)}); // Échap = Passer
+$("tour-btn").addEventListener("click",startTour);
+addEventListener("resize",placeTour);
+addEventListener("scroll",placeTour,true);
+// Recalage pendant la visite si la page bouge encore (polices, images en cours de chargement)
+setInterval(()=>{if(tour.open)placeTour()},300);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(placeTour);
+
+build();build2();if(corrected)renderCorrection();if(done2)renderBilan();markNav2();update();fsSync();
+// Page de garde au lancement ; la visite guidée se lance à la première entrée dans chaque exercice
+$("go-ex1").addEventListener("click",()=>show("exercice"));
+$("go-ex2").addEventListener("click",()=>show("exercice2"));
+show("accueil",true);
+try{if(localStorage.getItem(TOUR0_KEY)!=="1")setTimeout(()=>startTour(0),500)}catch(e){}
+</script>
+</body>
+</html>
