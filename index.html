@@ -553,7 +553,7 @@ body.is-home{background:#fdf8f2}
 @media (max-width:820px){.home-cards{grid-template-columns:1fr;gap:24px}.home-head{padding:0}.decor-home{display:none!important}}
 @media print{.av-menu,.tools,.skip,.decor,.decor-home,.trap-cta{display:none!important}body{padding-left:0}}
 
-/* ── Fin du module : écran plein, sans le menu ── */
+/* ── Fin de l'activité : écran plein, sans le menu ── */
 body.is-fin{--menu-rail:0px;background:#fdf8f2}
 body.is-fin .av-menu,body.is-fin #tour-btn{display:none}
 body.is-fin .decor{display:none}
@@ -598,7 +598,6 @@ body.is-fin .decor-home{display:block}
 .fin-btn:hover{background:var(--violet-soft);transform:scale(1.04)}
 .fin-btn:active{transform:scale(.96)}
 .fin-btn:hover svg{color:var(--violet)}
-.fin-msg{text-align:center;font-weight:600;color:var(--navy)}
 @media (max-width:1024px){.fin-grid{grid-template-columns:1fr}.fin-txt{padding-left:0}.fin-ring{margin:6px auto 0}.fin-img{margin:0 auto;max-width:620px}}
 @media (max-width:720px){.fin-img{display:none}.fin-btn{min-width:100%}}
 </style>
@@ -914,19 +913,18 @@ body.is-fin .decor-home{display:block}
   <div class="actions">
     <button type="button" class="btn" id="ret-co1">Revoir le corrigé 1.1</button>
     <button type="button" class="btn" id="ret-co2">Revoir le corrigé 1.2</button>
-    <button type="button" class="btn primary" id="ret-fin">Terminer le module <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+    <button type="button" class="btn primary" id="ret-fin">Terminer l'activité <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
   </div>
 </main>
 
-<!-- ===== Vue 6 : fin du module (plein écran, sans menu) ===== -->
+<!-- ===== Vue 6 : fin de l'activité (écran intermédiaire, plein écran, sans menu) ===== -->
 <main class="wrap fin" id="fin" hidden>
   <div class="fin-grid">
     <div class="fin-txt">
-      <p class="eyebrow">Fin du module</p>
-      <h1 tabindex="-1" id="h-fin">Bravo, vous avez terminé le module</h1>
-      <p class="lead">Vous avez finalisé les activités du module et consolidé les notions clés de préparation à la négociation.</p>
-      <p class="fin-badge"><svg width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#3fa535"/><path d="m7 12.5 3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Module terminé</p>
-      <div class="fin-ring" role="img" aria-label="Progression : 100 %, module terminé">
+      <p class="eyebrow">Fin de l'activité</p>
+      <h1 tabindex="-1" id="h-fin">Bravo, vous avez terminé l'activité</h1>
+      <p class="fin-badge"><svg width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#3fa535"/><path d="m7 12.5 3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Activité terminée</p>
+      <div class="fin-ring" role="img" aria-label="Progression : 100 %, activité terminée">
         <svg class="ring" viewBox="0 0 300 300" aria-hidden="true">
           <defs><linearGradient id="ring-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7dcc4a"/><stop offset="1" stop-color="#2f8f2a"/></linearGradient></defs>
           <circle class="ring-halo" cx="150" cy="150" r="145"/>
@@ -940,17 +938,15 @@ body.is-fin .decor-home{display:block}
         <div class="ring-center" aria-hidden="true">
           <svg class="ring-check" viewBox="0 0 100 70" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#3fa535" stroke-width="5"><path d="M50 4v12M28 12l6 10M72 12l-6 10M12 28l11 5M88 28l-11 5"/></g><path d="m34 46 12 12 22-24" stroke="#2f8f2a" stroke-width="9"/></svg>
           <span class="ring-pct"><span id="fin-pct">100</span> %</span>
-          <span class="ring-lbl">Module<br>terminé</span>
+          <span class="ring-lbl">Activité<br>terminée</span>
         </div>
       </div>
     </div>
     <div class="fin-img"><img src="assets/fin/illustration.png" alt="" width="840" height="515"></div>
   </div>
   <div class="fin-actions">
-    <button type="button" class="btn fin-btn" id="fin-revoir"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8"/><path d="M4 3v5h5"/><path d="M4 13a8 8 0 0 0 14.3 4.9L20 16"/><path d="M20 21v-5h-5"/></svg>Revoir le module</button>
-    <button type="button" class="btn fin-btn" id="fin-quitter"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5"/><path d="M14 12h7m-3-3 3 3-3 3"/></svg>Quitter</button>
+    <button type="button" class="btn fin-btn" id="fin-revoir"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8"/><path d="M4 3v5h5"/><path d="M4 13a8 8 0 0 0 14.3 4.9L20 16"/><path d="M20 21v-5h-5"/></svg>Revoir l'activité</button>
   </div>
-  <p class="fin-msg" id="fin-msg" role="status"></p>
 </main>
 </div>
 
@@ -1552,7 +1548,7 @@ const VIEWS={
   exercice2:{h:"h-ex2",nav:"nav-ex2",title:"1.2 Sept situations, quatre catégories"},
   corrige2:{h:"h-co2",nav:"nav-co2",title:"Corrigé 1.2"},
   retenir:{h:"h-ret",nav:"nav-ret",title:"À retenir"},
-  fin:{h:"h-fin",nav:null,title:"Fin du module"}
+  fin:{h:"h-fin",nav:null,title:"Fin de l'activité"}
 };
 let curView="exercice";
 function show(view,noFocus){
@@ -1577,14 +1573,14 @@ function show(view,noFocus){
   if(view==="exercice2")maybeTour2();
   if(view==="corrige"&&!trapSeen)setTimeout(()=>{if(curView==="corrige"&&!tour.open)openTrap(true)},500);
 }
-/* ===== Fin du module : jauge animée, revoir, quitter ===== */
+/* ===== Fin de l'activité : jauge animée, revoir ===== */
 function playFin(){
   const v=$("fin"),pct=$("fin-pct");
-  $("fin-msg").textContent="";
   v.classList.remove("play");void v.offsetWidth;v.classList.add("play"); // relance l'animation à chaque affichage
   if(matchMedia("(prefers-reduced-motion: reduce)").matches){pct.textContent="100";return}
   const t0=performance.now()+300,d=2200,ease=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
   pct.textContent="0";
+  clearTimeout(playFin.t);playFin.t=setTimeout(()=>{pct.textContent="100"},d+700); // filet si l'animation est suspendue
   (function step(now){
     if(curView!=="fin")return;
     const x=Math.min(Math.max((now-t0)/d,0),1);
@@ -1593,11 +1589,6 @@ function playFin(){
   })(performance.now());
 }
 $("fin-revoir").addEventListener("click",()=>show("accueil"));
-$("fin-quitter").addEventListener("click",()=>{
-  if(typeof window.AV_QUITTER==="function")window.AV_QUITTER(); // SCORM : enregistre et clôt la session
-  try{window.close()}catch(e){}
-  setTimeout(()=>{if(!window.closed)$("fin-msg").textContent="Votre progression est enregistrée. Vous pouvez fermer cette fenêtre."},300);
-});
 function markNav(allGood){
   $("nav-ex").classList.toggle("is-done",corrected);
   $("nav-ex-state").textContent=corrected?", terminé":", à faire";
